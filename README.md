@@ -94,8 +94,8 @@ El sitio fue diseñado y desarrollado a medida para ofrecer:
 ## ⚖️ Licencia & Copyright
 
 ```
-Copyright (c) 2024–2074 K&A Balloons Studio — Todos los derechos reservados.
-Protegido por un mínimo de 50 años desde la fecha de creación (2024).
+Copyright (c) 2026–2076 K&A Balloons Studio — Todos los derechos reservados.
+Protegido por un mínimo de 50 años desde la fecha de creación (2026).
 El término se renueva con cada versión actualizada del Work.
 ```
 
@@ -112,7 +112,7 @@ El término se renueva con cada versión actualizada del Work.
 > - El uso del nombre, marca, logo o identidad visual de **K&A Balloons Studio**
 >
 > La protección de derechos de autor cubre un mínimo de **50 años** a partir de
-> la fecha de primera publicación del trabajo (2024), renovándose automáticamente
+> la fecha de primera publicación del trabajo (2026), renovándose automáticamente
 > con cada actualización publicada, conforme al **Artículo 21 de la Ley 23 de 1982**
 > (Colombia) y los estándares del **Convenio de Berna**.
 >
@@ -131,5 +131,5 @@ Consulta el archivo [`LICENSE`](./LICENSE) para los términos completos.
 ---
 
 <div align="center">
-  <sub>© 2024–2026 K&A Balloons Studio · Bogotá, Colombia · Todos los derechos reservados.</sub>
+  <sub>© 2026–2076 K&A Balloons Studio · Bogotá, Colombia · Todos los derechos reservados.</sub>
 </div>
