@@ -738,6 +738,58 @@ p  { color: var(--text-muted); line-height: 1.7; }
 }
 
 /* ============================================================
+   MOBILE — Comprehensive phone layout fixes
+   ============================================================ */
+
+/* ─ General spacing on small screens ─ */
+@media (max-width: 600px) {
+  .section { padding: var(--sp-3xl) 0; }
+  .section-header { margin-bottom: var(--sp-2xl); }
+  .section-sub { font-size: .92rem; }
+
+  /* Hero */
+  .hero-content { padding-top: calc(var(--sp-3xl) + 70px); padding-bottom: var(--sp-3xl); }
+  .hero-stats { gap: var(--sp-lg); flex-wrap: wrap; }
+  .hstat .n  { font-size: 1.6rem; }
+  .hstat .l  { font-size: .7rem; }
+  .hero-eyebrow { font-size: .65rem; }
+  .hero-cta .btn { width: 100%; justify-content: center; }
+
+  /* Navbar on mobile — shrink logo text */
+  .logo-copy .name    { font-size: .88rem; }
+  .logo-copy .tagline { display: none; }
+
+  /* Services */
+  .services-grid { grid-template-columns: 1fr; gap: var(--sp-md); }
+  .svc-img { height: 160px; }
+
+  /* Portfolio */
+  .port-grid { grid-template-columns: 1fr 1fr; gap: var(--sp-sm); }
+  .port-item:first-child { grid-column: span 2; aspect-ratio: 3/2; }
+
+  /* MVV */
+  .mvv-grid { grid-template-columns: 1fr; gap: var(--sp-lg); }
+
+  /* CTA banner */
+  .cta-inner h2 { font-size: 1.5rem; }
+  .cta-btns { flex-direction: column; align-items: stretch; }
+  .cta-btns .btn { width: 100%; justify-content: center; }
+
+  /* Footer */
+  .footer-grid { grid-template-columns: 1fr; gap: var(--sp-xl); }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  .footer-bottom-links { justify-content: center; }
+
+  /* Toast notifications */
+  #toast-container { bottom: var(--sp-md); right: var(--sp-md); left: var(--sp-md); }
+  .toast { min-width: unset; max-width: 100%; width: 100%; }
+
+  /* Forms */
+  .form-row { grid-template-columns: 1fr; }
+  .btn { padding: .7rem 1.25rem; font-size: .9rem; }
+}
+
+/* ============================================================
    UTILITIES
    ============================================================ */
 .text-center { text-align: center; }
