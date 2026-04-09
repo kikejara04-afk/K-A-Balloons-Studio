@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mi Perfil — K&amp;A Balloons Studio</title>
+  <meta name="description" content="Perfil de usuario — K&A Balloons Studio"/>
+  <link rel="icon" type="image/jpeg" href="anexos/images/logo/LOGO.jpeg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <link rel="stylesheet" href="css/animations.css"/>
+  <style>
+    /* ── Profile hero ── */
+    .prof-hero {
+      min-height: 28vh;
+      display: flex; align-items: flex-end;
+      background: var(--grad-hero); position: relative; overflow: hidden;
+      padding-bottom: var(--sp-3xl); padding-top: calc(var(--sp-4xl) + 60px);
+    }
+    .prof-hero .hero-grid {
+      position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size: 58px 58px;
+    }
+    .prof-hero .container { position: relative; z-index: 1; }
+    .prof-hero h1 { color: var(--white); margin: 0 0 .25rem; }
+    .prof-hero p  { color: rgba(255,255,255,.7); margin: 0; font-size: .9rem; }
+    .breadcrumb { display: flex; align-items: center; gap: .4rem; font-size: .8rem; color: rgba(255,255,255,.6); margin-bottom: var(--sp-md); }
+    .breadcrumb a { color: rgba(255,255,255,.6); transition: color var(--tr-fast); }
+    .breadcrumb a:hover { color: var(--white); }
+    .breadcrumb i { font-size: .6rem; }
+
+    /* ── Profile layout ── */
+    .prof-body {
+      max-width: 960px; margin: 0 auto;
+      padding: var(--sp-4xl) var(--sp-xl) var(--sp-4xl);
+      display: grid;
+      grid-template-columns: 300px 1fr;
+      gap: var(--sp-2xl);
+      align-items: start;
+    }
+    @media (max-width: 760px) {
+      .prof-body { grid-template-columns: 1fr; }
+    }
+
+    /* ── Profile card ── */
+    .prof-card {
+      background: var(--white); border-radius: var(--r-2xl);
+      box-shadow: var(--sh-lg); overflow: hidden;
+      position: sticky; top: 80px;
+    }
+    .prof-card-banner {
+      height: 80px; background: var(--grad-primary);
+    }
+    .prof-card-body {
+      padding: 0 var(--sp-xl) var(--sp-2xl);
+      text-align: center;
+      margin-top: -40px;
+    }
+    .prof-avatar {
+      width: 80px; height: 80px;
+      border-radius: var(--r-full);
+      background: var(--grad-primary);
+      color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-head); font-size: 1.8rem; font-weight: 700;
+      margin: 0 auto var(--sp-md);
+      border: 4px solid var(--white);
+      box-shadow: var(--sh-md);
+    }
+    .prof-name { font-family: var(--font-head); font-size: 1.2rem; font-weight: 700; margin: 0 0 .15rem; }
+    .prof-email { font-size: .82rem; color: var(--text-muted); word-break: break-all; }
+    .prof-role-badge {
+      display: inline-flex; align-items: center; gap: .3rem;
+      margin-top: var(--sp-sm); padding: .25rem .75rem;
+      border-radius: var(--r-full); font-size: .75rem; font-weight: 700;
+    }
+    .badge-user  { background: var(--blue-pale);   color: var(--blue-mid); }
+    .badge-admin { background: var(--purple-pale);  color: var(--purple-mid); }
+    .prof-card-actions { margin-top: var(--sp-lg); display: flex; flex-direction: column; gap: var(--sp-sm); }
+    .btn-prof-action {
+      width: 100%; padding: .6rem; border-radius: var(--r-md);
+      font-family: var(--font-body); font-size: .875rem; font-weight: 600;
+      border: none; cursor: pointer; display: flex; align-items: center;
+      justify-content: center; gap: .4rem; transition: opacity var(--tr-fast), transform var(--tr-fast);
+      text-decoration: none;
+    }
+    .btn-prof-action:hover { opacity: .86; transform: translateY(-1px); }
+    .btn-admin-panel { background: var(--grad-primary); color: var(--white); }
+    .btn-logout-prof  { background: #FEE2E2; color: #DC2626; }
+
+    /* ── Main col: sections ── */
+    .prof-section {
+      background: var(--white); border-radius: var(--r-2xl);
+      box-shadow: var(--sh-md); overflow: hidden; margin-bottom: var(--sp-xl);
+    }
+    .prof-section:last-child { margin-bottom: 0; }
+    .prof-sec-head {
+      padding: var(--sp-lg) var(--sp-xl);
+      border-bottom: 1px solid var(--gray-100);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .prof-sec-head h2 {
+      margin: 0; font-size: 1rem; font-weight: 700;
+      display: flex; align-items: center; gap: .5rem;
+    }
+    .prof-sec-head h2 i { color: var(--blue-mid); font-size: .95rem; }
+    .prof-sec-body { padding: var(--sp-xl); }
+
+    /* ── Edit form ── */
+    .prof-field-label {
+      font-size: .78rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .05em; color: var(--text-muted); display: block; margin-bottom: .4rem;
+    }
+    .prof-field-input {
+      width: 100%; border: 1px solid var(--gray-200); border-radius: var(--r-md);
+      padding: .55rem .85rem; font-family: var(--font-body); font-size: .9rem;
+      background: var(--white); color: var(--text); outline: none;
+      transition: border-color var(--tr-fast);
+    }
+    .prof-field-input:focus { border-color: var(--blue-mid); box-shadow: 0 0 0 3px rgba(37,99,235,.1); }
+    .prof-field-input[readonly] { background: var(--gray-50); color: var(--text-muted); cursor: default; }
+    .prof-field-group { margin-bottom: var(--sp-lg); }
+    .btn-save-prof {
+      background: var(--grad-primary); color: var(--white);
+      border: none; border-radius: var(--r-md); padding: .6rem 1.4rem;
+      font-family: var(--font-body); font-size: .9rem; font-weight: 600;
+      cursor: pointer; display: inline-flex; align-items: center; gap: .4rem;
+      transition: opacity var(--tr-fast);
+    }
+    .btn-save-prof:hover { opacity: .88; }
+    .save-feedback { font-size: .82rem; margin-left: var(--sp-md); color: #059669; display: none; }
+    .save-feedback.show { display: inline; }
+
+    /* ── Reservations list ── */
+    .res-list { list-style: none; padding: 0; margin: 0; }
+    .res-list-item {
+      display: flex; align-items: flex-start; gap: var(--sp-md);
+      padding: var(--sp-md) 0;
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .res-list-item:last-child { border-bottom: none; }
+    .res-date-badge {
+      min-width: 54px; text-align: center;
+      background: var(--grad-subtle); border-radius: var(--r-md);
+      padding: .3rem .5rem; font-size: .72rem; color: var(--text-muted); line-height: 1.3;
+    }
+    .res-date-badge strong { display: block; font-size: 1.1rem; color: var(--blue-mid); font-family: var(--font-head); }
+    .res-info { flex: 1; min-width: 0; }
+    .res-service-name { font-weight: 600; font-size: .9rem; }
+    .res-location-text { font-size: .8rem; color: var(--text-muted); margin-top: .1rem; }
+    .res-status-mini {
+      font-size: .72rem; font-weight: 700; padding: .2rem .55rem;
+      border-radius: var(--r-full); white-space: nowrap;
+    }
+    .rs-pendiente  { background: #FFFBEB; color: #92400E; }
+    .rs-confirmada { background: #ECFDF5; color: #065F46; }
+    .rs-completada { background: #EFF6FF; color: #1E3A8A; }
+    .rs-cancelada  { background: #FEF2F2; color: #991B1B; }
+    .res-empty { text-align: center; padding: var(--sp-2xl); color: var(--text-muted); }
+    .res-empty i { font-size: 2.2rem; display: block; opacity: .3; margin-bottom: var(--sp-sm); }
+  </style>
+</head>
+<body>
+
+<!-- Page transition -->
+<div id="page-transition" aria-hidden="true"><div id="pt-curtain" class="pt-curtain"></div></div>
+<div id="toast-container" aria-live="polite"></div>
+
+<!-- NAVBAR -->
+<nav id="navbar" class="navbar" role="navigation" aria-label="Main navigation">
+  <div class="container navbar-inner">
+    <a href="index.html" class="nav-logo" aria-label="K&A Balloons Studio">
+      <img src="anexos/images/logo/LOGO.jpeg" alt="K&amp;A Balloons Studio" style="height:72px;width:auto"/>
+    </a>
+    <div class="nav-right">
+      <div class="lang-toggle" role="group">
+        <button class="lang-btn active" data-lang="es">ES</button>
+        <button class="lang-btn" data-lang="en">EN</button>
+      </div>
+      <a id="btn-nav-login" href="login.html" class="btn-nav-login">
+        <i class="fa-solid fa-user" aria-hidden="true"></i>
+        <span data-i18n="nav_login">Iniciar Sesión</span>
+      </a>
+      <button id="hamburger" class="hamburger" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MENU OVERLAY -->
+<div id="menu-overlay" class="menu-overlay" role="dialog" aria-modal="true" aria-label="Menú">
+  <div id="menu-backdrop" class="menu-backdrop"></div>
+  <div class="menu-panel">
+    <div class="menu-head">
+      <div class="menu-deco-balloons" aria-hidden="true">
+        <div class="deco-balloon"></div><div class="deco-balloon"></div>
+        <div class="deco-balloon"></div><div class="deco-balloon"></div>
+      </div>
+      <button id="menu-close" class="menu-close" aria-label="Cerrar menú"><i class="fa-solid fa-xmark"></i></button>
+      <div class="menu-brand"><h3>K&amp;A Balloons Studio</h3><p data-i18n="nav_tagline">Diseño con Globos</p></div>
+    </div>
+    <nav class="menu-nav">
+      <ul class="menu-nav-list">
+        <li class="menu-nav-item"><a href="index.html"><span class="nav-icon"><i class="fa-solid fa-house"></i></span><span data-i18n="nav_home">Inicio</span></a></li>
+        <li class="menu-nav-item"><a href="services.html"><span class="nav-icon"><i class="fa-solid fa-star"></i></span><span data-i18n="nav_services">Servicios</span></a></li>
+        <li class="menu-nav-item"><a href="portfolio.html"><span class="nav-icon"><i class="fa-solid fa-images"></i></span><span data-i18n="nav_portfolio">Proyectos</span></a></li>
+        <div class="menu-sep"></div>
+        <li class="menu-nav-item"><a href="contact.html"><span class="nav-icon"><i class="fa-solid fa-calendar-check"></i></span><span data-i18n="nav_contact">Contacto &amp; Reservas</span></a></li>
+        <div class="menu-sep"></div>
+        <li class="menu-nav-item"><a href="login.html"><span class="nav-icon"><i class="fa-solid fa-right-to-bracket"></i></span><span data-i18n="nav_login">Iniciar Sesión</span></a></li>
+      </ul>
+    </nav>
+    <div class="menu-foot">
+      <div class="menu-socials">
+        <a href="https://www.instagram.com/angelita._.esco" target="_blank" rel="noopener" class="ms-btn instagram" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@kaballoonsstudio" target="_blank" rel="noopener" class="ms-btn tiktok" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://wa.me/573006036940?text=%C2%A1Hola%20K%26A%20Balloons%20Studio!%20%F0%9F%8E%88%20Me%20encantar%C3%ADa%20saber%20m%C3%A1s%20sobre%20sus%20decoraciones%20con%20globos.%20%C2%BFMe%20pueden%20ayudar%3F" target="_blank" rel="noopener" class="ms-btn whatsapp" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+      <p class="menu-copy" data-i18n="foot_rights">© 2025 K&amp;A Balloons Studio</p>
+    </div>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="prof-hero" aria-label="Perfil de usuario">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Ruta de navegación">
+      <a href="index.html">Inicio</a>
+      <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+      <span>Mi Perfil</span>
+    </nav>
+    <h1>Mi <span class="accent">Perfil</span></h1>
+    <p>Administra tu información y revisa tus reservas.</p>
+  </div>
+</div>
+
+<!-- PROFILE BODY -->
+<div class="prof-body" id="prof-body" style="display:none">
+
+  <!-- LEFT: Profile card -->
+  <aside>
+    <div class="prof-card">
+      <div class="prof-card-banner"></div>
+      <div class="prof-card-body">
+        <div class="prof-avatar" id="prof-avatar-circle">KA</div>
+        <h2 class="prof-name" id="prof-display-name">—</h2>
+        <p class="prof-email" id="prof-display-email">—</p>
+        <span class="prof-role-badge" id="prof-role-badge"><i class="fa-solid fa-user"></i> Usuario</span>
+        <div class="prof-card-actions" id="prof-card-actions">
+          <button class="btn-prof-action btn-logout-prof" id="prof-logout-btn">
+            <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+          </button>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- RIGHT: Sections -->
+  <div>
+
+    <!-- Edit info -->
+    <div class="prof-section">
+      <div class="prof-sec-head">
+        <h2><i class="fa-solid fa-pen-to-square"></i> Información Personal</h2>
+      </div>
+      <div class="prof-sec-body">
+        <div class="prof-field-group">
+          <label class="prof-field-label" for="pf-name">Nombre para mostrar</label>
+          <input class="prof-field-input" type="text" id="pf-name" maxlength="60" placeholder="Tu nombre"/>
+        </div>
+        <div class="prof-field-group">
+          <label class="prof-field-label" for="pf-email">Correo electrónico</label>
+          <input class="prof-field-input" type="email" id="pf-email" readonly/>
+        </div>
+        <div class="prof-field-group">
+          <label class="prof-field-label" for="pf-tipo">Tipo de cuenta</label>
+          <input class="prof-field-input" type="text" id="pf-tipo" readonly/>
+        </div>
+        <button class="btn-save-prof" id="pf-save-btn">
+          <i class="fa-solid fa-floppy-disk"></i> Guardar cambios
+        </button>
+        <span class="save-feedback" id="pf-save-ok">✓ Guardado correctamente</span>
+      </div>
+    </div>
+
+    <!-- Reservations history -->
+    <div class="prof-section">
+      <div class="prof-sec-head">
+        <h2><i class="fa-solid fa-calendar-check"></i> Mis Reservas</h2>
+        <a href="contact.html" class="btn btn-primary" style="padding:.4rem 1rem;font-size:.82rem;">
+          <i class="fa-solid fa-plus"></i> Nueva reserva
+        </a>
+      </div>
+      <div class="prof-sec-body" style="padding-top: var(--sp-md)">
+        <ul class="res-list" id="prof-res-list"></ul>
+        <div class="res-empty" id="prof-res-empty" style="display:none">
+          <i class="fa-solid fa-calendar-xmark"></i>
+          <p>Aún no tienes reservas registradas.<br>
+          <a href="contact.html" style="color:var(--blue-mid)">Haz tu primera reserva</a> →</p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end right col -->
+</div><!-- end prof-body -->
+
+<!-- Redirect to login message (shown if not authenticated) -->
+<div id="prof-noauth" style="display:none; text-align:center; padding: var(--sp-4xl) var(--sp-xl);">
+  <i class="fa-solid fa-lock" style="font-size:3rem;color:var(--gray-300);display:block;margin-bottom:var(--sp-lg)"></i>
+  <h2 style="font-family:var(--font-head)">Inicia sesión para ver tu perfil</h2>
+  <p style="color:var(--text-muted);margin-bottom:var(--sp-2xl)">Necesitas una cuenta para acceder a esta sección.</p>
+  <a href="login.html" class="btn btn-primary"><i class="fa-solid fa-right-to-bracket"></i> Iniciar Sesión</a>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" aria-label="K&A Balloons Studio">
+          <img src="anexos/images/logo/LOGO.jpeg" alt="K&amp;A Balloons Studio" style="height:64px;width:auto"/>
+        </a>
+        <p class="mt-md" data-i18n="foot_desc">Empresa de diseño y decoración con globos en Bogotá, Colombia. Hacemos de cada evento una celebración especial.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/angelita._.esco" target="_blank" rel="noopener noreferrer" class="fsoc instagram" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@kaballoonsstudio" target="_blank" rel="noopener noreferrer" class="fsoc tiktok" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="https://wa.me/573006036940?text=%C2%A1Hola%20K%26A%20Balloons%20Studio!%20%F0%9F%8E%88%20Me%20encantar%C3%ADa%20saber%20m%C3%A1s%20sobre%20sus%20decoraciones%20con%20globos.%20%C2%BFMe%20pueden%20ayudar%3F" target="_blank" rel="noopener noreferrer" class="fsoc whatsapp" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="foot_links">Navegación</h4>
+        <ul class="footer-links">
+          <li><a href="index.html" data-i18n="nav_home">Inicio</a></li>
+          <li><a href="services.html" data-i18n="nav_services">Servicios</a></li>
+          <li><a href="portfolio.html" data-i18n="nav_portfolio">Proyectos</a></li>
+          <li><a href="contact.html" data-i18n="nav_contact">Contacto</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="foot_services">Servicios</h4>
+        <ul class="footer-links">
+          <li><a href="services.html" data-i18n="svc1_title">Decoración para Eventos</a></li>
+          <li><a href="services.html" data-i18n="svc2_title">Arreglos &amp; Regalos</a></li>
+          <li><a href="services.html" data-i18n="svc3_title">Arcos &amp; Columnas</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="foot_contact">Contacto</h4>
+        <div class="footer-contact-row"><i class="fa-solid fa-location-dot"></i><span>Bogotá, Colombia</span></div>
+        <div class="footer-contact-row"><i class="fa-solid fa-phone"></i><span><a href="tel:+573006036940" style="color:inherit">+57 300 603 6940</a></span></div>
+        <div class="footer-contact-row"><i class="fa-solid fa-envelope"></i><span><a href="mailto:kya.balloonsstudio@gmail.com" style="color:inherit">kya.balloonsstudio@gmail.com</a></span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p data-i18n="foot_rights">© 2025 K&amp;A Balloons Studio. Todos los derechos reservados.</p>
+      <div class="footer-bottom-links">
+        <a href="privacidad.html" data-i18n="foot_privacy">Privacidad</a>
+        <a href="terms.html" data-i18n="foot_terms">Términos</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="js/translations.js"></script>
+<script src="js/main.js"></script>
+<script>
+/* ============================================================
+   PROFILE PAGE LOGIC
+   ============================================================ */
+const SERVICE_NAMES = {
+  'event-decoration': 'Decoración para Eventos',
+  'gift-arrangement':  'Arreglos & Regalos',
+  'arch-column':       'Arcos & Columnas',
+  'custom-design':     'Diseños Personalizados',
+  'corporate':         'Evento Corporativo',
+  'premium':           'Paquete Premium',
+  'cumpleaños':        'Cumpleaños',
+  'boda':              'Boda',
+  'corporativo':       'Corporativo',
+  'otro':              'Otro',
+};
+
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function formatDate(str) {
+  if (!str) return '—';
+  const d = new Date(str);
+  if (isNaN(d)) return str;
+  return d.toLocaleDateString('es-CO', { day: '2-digit', month: 'short', year: 'numeric' });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // --- Auth guard ---
+  let user = null;
+  try {
+    const raw = localStorage.getItem('ka_user') || sessionStorage.getItem('ka_user');
+    user = raw ? JSON.parse(raw) : null;
+  } catch (_) {}
+
+  if (!user) {
+    document.getElementById('prof-noauth').style.display = 'block';
+    return;
+  }
+
+  document.getElementById('prof-body').style.display = 'grid';
+
+  const initials = user.name.split(/\s+/).filter(Boolean).map(n => n[0]).slice(0,2).join('').toUpperCase();
+  const isAdmin  = user.role === 'admin';
+
+  // --- Fill profile card ---
+  document.getElementById('prof-avatar-circle').textContent  = initials;
+  document.getElementById('prof-display-name').textContent   = user.name;
+  document.getElementById('prof-display-email').textContent  = user.email || '—';
+  const roleBadge = document.getElementById('prof-role-badge');
+  if (isAdmin) {
+    roleBadge.innerHTML = '<i class="fa-solid fa-shield-halved"></i> Administrador';
+    roleBadge.classList.add('badge-admin');
+  } else {
+    roleBadge.innerHTML = '<i class="fa-solid fa-user"></i> Usuario';
+    roleBadge.classList.add('badge-user');
+  }
+
+  // Admin panel button (only for admin)
+  if (isAdmin) {
+    const actions = document.getElementById('prof-card-actions');
+    const adminBtn = document.createElement('a');
+    adminBtn.href = 'admin-reservations.html';
+    adminBtn.className = 'btn-prof-action btn-admin-panel';
+    adminBtn.innerHTML = '<i class="fa-solid fa-shield-halved"></i> Panel de Administración';
+    actions.insertBefore(adminBtn, actions.firstChild);
+  }
+
+  // Logout button
+  document.getElementById('prof-logout-btn')?.addEventListener('click', () => {
+    localStorage.removeItem('ka_user');
+    sessionStorage.removeItem('ka_user');
+    window.location.href = 'login.html';
+  });
+
+  // --- Fill edit form ---
+  document.getElementById('pf-name').value  = user.name;
+  document.getElementById('pf-email').value = user.email || '';
+  document.getElementById('pf-tipo').value  = isAdmin ? 'Administrador' : (user.demo ? 'Usuario (demo)' : 'Usuario registrado');
+
+  // Save name changes
+  document.getElementById('pf-save-btn')?.addEventListener('click', () => {
+    const newName = document.getElementById('pf-name').value.trim();
+    if (!newName) return;
+    user.name = newName;
+    localStorage.setItem('ka_user', JSON.stringify(user));
+    sessionStorage.setItem('ka_user', JSON.stringify(user));
+    // Update card
+    const newInitials = newName.split(/\s+/).filter(Boolean).map(n => n[0]).slice(0,2).join('').toUpperCase();
+    document.getElementById('prof-avatar-circle').textContent = newInitials;
+    document.getElementById('prof-display-name').textContent  = newName;
+    // Feedback
+    const fb = document.getElementById('pf-save-ok');
+    fb.classList.add('show');
+    setTimeout(() => fb.classList.remove('show'), 3000);
+  });
+
+  // --- Reservations list ---
+  let reservations = [];
+  try {
+    const all = JSON.parse(localStorage.getItem('ka_reservations') || '[]');
+    // For admin show all; for regular user filter by email
+    reservations = isAdmin ? all : all.filter(r => r.email === user.email);
+  } catch (_) {}
+
+  const list  = document.getElementById('prof-res-list');
+  const empty = document.getElementById('prof-res-empty');
+
+  if (!reservations.length) {
+    empty.style.display = 'block';
+  } else {
+    const STATUS_MAP = {
+      pendiente:  ['rs-pendiente',  '⏰ Pendiente'],
+      confirmada: ['rs-confirmada', '✓ Confirmada'],
+      completada: ['rs-completada', '✓ Completada'],
+      cancelada:  ['rs-cancelada',  '✕ Cancelada'],
+    };
+    list.innerHTML = reservations
+      .sort((a,b) => new Date(b.createdAt||0) - new Date(a.createdAt||0))
+      .map(r => {
+        const d    = r.date ? new Date(r.date + 'T00:00:00') : null;
+        const day  = d ? d.getDate() : '—';
+        const mon  = d ? d.toLocaleDateString('es-CO', {month:'short'}) : '';
+        const [cls, lbl] = STATUS_MAP[r.status] || STATUS_MAP.pendiente;
+        const svc  = SERVICE_NAMES[r.service] || r.service || 'Servicio';
+        return `
+          <li class="res-list-item">
+            <div class="res-date-badge">
+              <strong>${day}</strong>${mon}
+            </div>
+            <div class="res-info">
+              <div class="res-service-name">${escHtml(svc)}</div>
+              <div class="res-location-text"><i class="fa-solid fa-location-dot" aria-hidden="true"></i> ${escHtml(r.location||'—')}</div>
+            </div>
+            <span class="res-status-mini ${cls}">${lbl}</span>
+          </li>`;
+      }).join('');
+  }
+});
+</script>
+
+</body>
+</html>

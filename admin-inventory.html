@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin — Inventario | K&amp;A Balloons Studio</title>
+  <link rel="icon" type="image/jpeg" href="anexos/images/logo/LOGO.jpeg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    body  { margin: 0; font-family: var(--font-body); background: var(--off-white); color: var(--text); min-height: 100vh; }
+
+    /* ── Top bar ── */
+    .adm-topbar {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--grad-primary); color: var(--white);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 var(--sp-xl); height: 60px; box-shadow: var(--sh-lg);
+    }
+    .adm-brand { display: flex; align-items: center; gap: var(--sp-sm); font-family: var(--font-head); font-weight: 700; font-size: 1.1rem; }
+    .adm-brand i { font-size: 1.3rem; }
+    .adm-user  { display: flex; align-items: center; gap: var(--sp-md); font-size: .9rem; }
+    .adm-nav-links { display: flex; gap: var(--sp-lg); }
+    .adm-nav-links a {
+      color: rgba(255,255,255,.75); text-decoration: none; font-size: .9rem;
+      padding: .3rem .6rem; border-radius: var(--r-md);
+      transition: background var(--tr-fast), color var(--tr-fast);
+    }
+    .adm-nav-links a:hover, .adm-nav-links a.active { background: rgba(255,255,255,.15); color: var(--white); }
+    .btn-logout {
+      background: rgba(255,255,255,.15); border: 1px solid rgba(255,255,255,.3);
+      color: var(--white); border-radius: var(--r-md);
+      padding: .35rem .9rem; font-size: .85rem; cursor: pointer; transition: background var(--tr-fast);
+    }
+    .btn-logout:hover { background: rgba(255,255,255,.25); }
+
+    /* ── Main ── */
+    .adm-main { max-width: 1200px; margin: 0 auto; padding: var(--sp-2xl) var(--sp-xl); }
+    .adm-page-header { margin-bottom: var(--sp-xl); display: flex; align-items: flex-start; justify-content: space-between; gap: var(--sp-md); flex-wrap: wrap; }
+    .adm-page-header h1 { font-family: var(--font-head); font-size: 1.8rem; margin: 0 0 .25rem; }
+    .adm-page-header p  { color: var(--text-muted); margin: 0; font-size: .9rem; }
+
+    /* ── Stats ── */
+    .adm-stats { display: flex; gap: var(--sp-lg); flex-wrap: wrap; margin-bottom: var(--sp-xl); }
+    .adm-stat-card {
+      background: var(--white); border-radius: var(--r-xl); box-shadow: var(--sh-md);
+      padding: var(--sp-lg) var(--sp-xl); display: flex; align-items: center; gap: var(--sp-md); min-width: 150px;
+    }
+    .adm-stat-icon { font-size: 1.6rem; }
+    .adm-stat-val  { font-family: var(--font-head); font-size: 1.6rem; font-weight: 700; line-height: 1; }
+    .adm-stat-lbl  { font-size: .78rem; color: var(--text-muted); margin-top: .15rem; }
+
+    /* ── Toolbar ── */
+    .adm-toolbar {
+      display: flex; gap: var(--sp-md); flex-wrap: wrap; align-items: center;
+      background: var(--white); border-radius: var(--r-xl); box-shadow: var(--sh-sm);
+      padding: var(--sp-md) var(--sp-lg); margin-bottom: var(--sp-xl);
+    }
+    .adm-toolbar select, .adm-toolbar input[type="text"] {
+      border: 1px solid var(--gray-200); border-radius: var(--r-md);
+      padding: .4rem .7rem; font-size: .85rem; font-family: var(--font-body);
+      background: var(--gray-50); outline: none; transition: border-color var(--tr-fast);
+    }
+    .adm-toolbar select:focus, .adm-toolbar input:focus { border-color: var(--blue-mid); }
+    .btn-primary {
+      background: var(--grad-primary); color: var(--white);
+      border: none; border-radius: var(--r-md); padding: .5rem 1.2rem;
+      font-family: var(--font-body); font-size: .9rem; font-weight: 600;
+      cursor: pointer; white-space: nowrap; transition: opacity var(--tr-fast);
+      display: inline-flex; align-items: center; gap: .4rem;
+    }
+    .btn-primary:hover { opacity: .88; }
+
+    /* ── Inventory grid ── */
+    .inv-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: var(--sp-lg);
+      margin-bottom: var(--sp-2xl);
+    }
+    .inv-card {
+      background: var(--white); border-radius: var(--r-xl); box-shadow: var(--sh-sm);
+      overflow: hidden; transition: box-shadow var(--tr-base), transform var(--tr-base);
+      border: 2px solid transparent;
+      position: relative;
+    }
+    .inv-card:hover { box-shadow: var(--sh-lg); transform: translateY(-2px); }
+    .inv-card.low-stock { border-color: #FCD34D; }
+    .inv-card.out-of-stock { border-color: #FCA5A5; }
+    .inv-card-color {
+      height: 8px;
+    }
+    .inv-card-body { padding: var(--sp-lg); }
+    .inv-card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--sp-sm); margin-bottom: var(--sp-sm); }
+    .inv-type-badge {
+      font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em;
+      padding: .2rem .55rem; border-radius: var(--r-full);
+      background: var(--gray-100); color: var(--gray-600);
+    }
+    .inv-name { font-weight: 600; font-size: .95rem; margin: .25rem 0 .1rem; }
+    .inv-color-label { font-size: .8rem; color: var(--text-muted); }
+    .inv-qty {
+      font-family: var(--font-head); font-size: 2rem; font-weight: 700;
+      margin: var(--sp-sm) 0 .15rem; line-height: 1;
+    }
+    .inv-qty-label { font-size: .78rem; color: var(--text-muted); }
+    .inv-stock-bar { margin: var(--sp-sm) 0; height: 6px; background: var(--gray-100); border-radius: var(--r-full); overflow: hidden; }
+    .inv-stock-fill { height: 100%; border-radius: var(--r-full); transition: width .4s ease; }
+    .inv-stock-ok   .inv-stock-fill { background: #6EE7B7; }
+    .inv-stock-low  .inv-stock-fill { background: #FCD34D; }
+    .inv-stock-out  .inv-stock-fill { background: #FCA5A5; }
+    .inv-card-footer { padding: var(--sp-sm) var(--sp-lg) var(--sp-md); display: flex; gap: .4rem; border-top: 1px solid var(--gray-100); }
+    .btn-sm {
+      flex: 1; padding: .35rem; border: none; border-radius: var(--r-md);
+      font-size: .8rem; cursor: pointer; transition: opacity var(--tr-fast);
+      display: inline-flex; align-items: center; justify-content: center; gap: .3rem;
+    }
+    .btn-sm:hover { opacity: .8; }
+    .btn-edit   { background: var(--blue-pale);   color: var(--blue-mid); }
+    .btn-delete-sm { background: #FEE2E2;        color: #DC2626; }
+    .btn-add-qty    { background: #D1FAE5;        color: #065F46; }
+
+    /* ── Stock badge on card ── */
+    .inv-status-label { font-size: .75rem; font-weight: 600; margin-top: .3rem; }
+    .stock-ok   { color: #059669; }
+    .stock-low  { color: #D97706; }
+    .stock-out  { color: #DC2626; }
+
+    /* ── Empty state ── */
+    .adm-empty { text-align: center; padding: var(--sp-4xl) var(--sp-xl); color: var(--text-muted); }
+    .adm-empty i { font-size: 3rem; margin-bottom: var(--sp-md); opacity: .3; display: block; }
+
+    /* ── Modal ── */
+    .adm-modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,.45);
+      z-index: 3000; display: none; align-items: center; justify-content: center; padding: var(--sp-xl);
+    }
+    .adm-modal-overlay.open { display: flex; }
+    .adm-modal {
+      background: var(--white); border-radius: var(--r-2xl); box-shadow: var(--sh-xl);
+      padding: var(--sp-2xl); max-width: 480px; width: 100%; position: relative;
+      max-height: 90vh; overflow-y: auto;
+    }
+    .adm-modal-close {
+      position: absolute; top: var(--sp-md); right: var(--sp-md);
+      background: var(--gray-100); border: none; border-radius: var(--r-full);
+      width: 32px; height: 32px; cursor: pointer; font-size: 1rem;
+      display: flex; align-items: center; justify-content: center; transition: background var(--tr-fast);
+    }
+    .adm-modal-close:hover { background: var(--gray-200); }
+    .adm-modal h3 { margin: 0 0 var(--sp-lg); font-family: var(--font-head); font-size: 1.3rem; }
+    .form-group { display: flex; flex-direction: column; gap: .35rem; margin-bottom: var(--sp-md); }
+    .form-group label { font-size: .82rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: .05em; }
+    .form-group input, .form-group select, .form-group textarea {
+      border: 1px solid var(--gray-200); border-radius: var(--r-md);
+      padding: .55rem .8rem; font-size: .9rem; font-family: var(--font-body);
+      background: var(--white); outline: none; transition: border-color var(--tr-fast);
+      width: 100%;
+    }
+    .form-group input:focus, .form-group select:focus { border-color: var(--blue-mid); box-shadow: 0 0 0 3px rgba(37,99,235,.1); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-md); }
+    .modal-footer { margin-top: var(--sp-xl); display: flex; gap: var(--sp-md); }
+    .modal-footer button { flex: 1; padding: .65rem; border: none; border-radius: var(--r-md); font-family: var(--font-body); font-size: .95rem; font-weight: 600; cursor: pointer; transition: opacity var(--tr-fast); }
+    .modal-footer button:hover { opacity: .88; }
+    .btn-save   { background: var(--grad-primary); color: var(--white); }
+    .btn-cancel-modal { background: var(--gray-100); color: var(--gray-600); }
+
+    /* ── Quick qty modal ── */
+    .qty-modal { max-width: 340px; }
+    .qty-stepper { display: flex; align-items: center; gap: var(--sp-md); margin: var(--sp-lg) 0; }
+    .qty-stepper input { text-align: center; font-size: 1.4rem; font-weight: 700; max-width: 100px; }
+    .btn-step {
+      background: var(--gray-100); border: none; border-radius: var(--r-md);
+      width: 40px; height: 40px; font-size: 1.2rem; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: background var(--tr-fast);
+    }
+    .btn-step:hover { background: var(--blue-pale); color: var(--blue-mid); }
+
+    /* ── Toast ── */
+    .adm-toast {
+      position: fixed; bottom: var(--sp-xl); right: var(--sp-xl);
+      background: var(--gray-800); color: var(--white);
+      padding: .7rem 1.2rem; border-radius: var(--r-lg); font-size: .875rem;
+      z-index: 9999; box-shadow: var(--sh-lg); transform: translateY(20px); opacity: 0;
+      transition: transform .3s ease, opacity .3s ease; pointer-events: none;
+    }
+    .adm-toast.show { transform: translateY(0); opacity: 1; }
+
+    @media (max-width: 640px) {
+      .adm-topbar { padding: 0 var(--sp-md); }
+      .adm-nav-links { display: none; }
+      .adm-main  { padding: var(--sp-lg) var(--sp-md); }
+      .form-row  { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Top bar -->
+<header class="adm-topbar">
+  <div class="adm-brand">
+    <i class="fa-solid fa-balloon"></i>
+    K&amp;A Admin
+  </div>
+  <nav class="adm-nav-links" aria-label="Admin nav">
+    <a href="admin-reservations.html"><i class="fa-solid fa-calendar-check"></i> Reservas</a>
+    <a href="admin-inventory.html" class="active"><i class="fa-solid fa-boxes-stacked"></i> Inventario</a>
+    <a href="index.html" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i> Ver sitio</a>
+  </nav>
+  <div class="adm-user">
+    <i class="fa-solid fa-user-shield"></i>
+    <span id="admin-user-name">Admin</span>
+    <button class="btn-logout" id="admin-logout-btn">
+      <i class="fa-solid fa-right-from-bracket"></i> Salir
+    </button>
+  </div>
+</header>
+
+<!-- Main -->
+<main class="adm-main">
+
+  <div class="adm-page-header">
+    <div>
+      <h1>Inventario de Globos</h1>
+      <p>Consulta, agrega y actualiza el stock de materiales disponibles.</p>
+    </div>
+    <button class="btn-primary" id="btn-new-item">
+      <i class="fa-solid fa-plus"></i> Agregar artículo
+    </button>
+  </div>
+
+  <!-- Stats -->
+  <div class="adm-stats">
+    <div class="adm-stat-card">
+      <div class="adm-stat-icon" style="color:var(--purple-mid)"><i class="fa-solid fa-boxes-stacked"></i></div>
+      <div><div class="adm-stat-val" id="stat-items">0</div><div class="adm-stat-lbl">Artículos</div></div>
+    </div>
+    <div class="adm-stat-card">
+      <div class="adm-stat-icon" style="color:var(--blue-mid)"><i class="fa-solid fa-cubes"></i></div>
+      <div><div class="adm-stat-val" id="stat-total-units">0</div><div class="adm-stat-lbl">Unidades totales</div></div>
+    </div>
+    <div class="adm-stat-card">
+      <div class="adm-stat-icon" style="color:#D97706"><i class="fa-solid fa-triangle-exclamation"></i></div>
+      <div><div class="adm-stat-val" id="stat-low">0</div><div class="adm-stat-lbl">Stock bajo</div></div>
+    </div>
+    <div class="adm-stat-card">
+      <div class="adm-stat-icon" style="color:#DC2626"><i class="fa-solid fa-xmark-circle"></i></div>
+      <div><div class="adm-stat-val" id="stat-out">0</div><div class="adm-stat-lbl">Sin stock</div></div>
+    </div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="adm-toolbar">
+    <input type="text" id="inv-search" placeholder="Buscar artículo…" style="min-width:200px"/>
+    <select id="inv-filter-type">
+      <option value="">Todos los tipos</option>
+      <option value="latex">Látex</option>
+      <option value="foil">Foil / Metalizado</option>
+      <option value="cromado">Cromado</option>
+      <option value="burbuja">Burbuja / Bobo</option>
+      <option value="led">LED / Luminoso</option>
+      <option value="accesorios">Accesorios</option>
+      <option value="otro">Otro</option>
+    </select>
+    <select id="inv-filter-stock">
+      <option value="">Todos los estados</option>
+      <option value="ok">Stock OK</option>
+      <option value="low">Stock bajo</option>
+      <option value="out">Sin stock</option>
+    </select>
+  </div>
+
+  <!-- Grid -->
+  <div class="inv-grid" id="inv-grid"></div>
+  <div class="adm-empty" id="inv-empty" style="display:none">
+    <i class="fa-solid fa-box-open"></i>
+    <p>No hay artículos que mostrar.<br>Prueba ajustando los filtros o agrega un artículo nuevo.</p>
+  </div>
+
+</main>
+
+<!-- Add / Edit modal -->
+<div class="adm-modal-overlay" id="inv-modal" role="dialog" aria-modal="true" aria-label="Artículo de inventario">
+  <div class="adm-modal">
+    <button class="adm-modal-close" id="inv-modal-close"><i class="fa-solid fa-xmark"></i></button>
+    <h3 id="inv-modal-title"><i class="fa-solid fa-boxes-stacked" style="color:var(--purple-mid)"></i> Nuevo Artículo</h3>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="f-type">Tipo de globo</label>
+        <select id="f-type">
+          <option value="latex">Látex</option>
+          <option value="foil">Foil / Metalizado</option>
+          <option value="cromado">Cromado</option>
+          <option value="burbuja">Burbuja / Bobo</option>
+          <option value="led">LED / Luminoso</option>
+          <option value="accesorios">Accesorios</option>
+          <option value="otro">Otro</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="f-size">Tamaño / Pulgadas</label>
+        <input id="f-size" type="text" placeholder='Ej: 12"' maxlength="20"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="f-name">Nombre / descripción</label>
+      <input id="f-name" type="text" placeholder="Ej: Globo látex redondo estándar" maxlength="80"/>
+    </div>
+
+    <div class="form-group">
+      <label for="f-brand">Marca</label>
+      <input id="f-brand" type="text" placeholder="Ej: Sempertex" maxlength="40" value="Sempertex"/>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="f-color">Color</label>
+        <input id="f-color" type="text" placeholder="Ej: Dorado, Rosa" maxlength="40"/>
+      </div>
+      <div class="form-group">
+        <label for="f-color-hex">Color visual</label>
+        <input id="f-color-hex" type="color" value="#F59E0B" style="height:40px;padding:.1rem .2rem;cursor:pointer"/>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="f-qty">Cantidad actual</label>
+        <input id="f-qty" type="number" min="0" value="0" placeholder="0"/>
+      </div>
+      <div class="form-group">
+        <label for="f-min">Stock mínimo</label>
+        <input id="f-min" type="number" min="0" value="10" placeholder="10"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="f-notes">Notas</label>
+      <input id="f-notes" type="text" placeholder="Notas adicionales (opcional)" maxlength="120"/>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn-cancel-modal" id="inv-modal-cancel">Cancelar</button>
+      <button class="btn-save" id="inv-modal-save"><i class="fa-solid fa-floppy-disk"></i> Guardar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Quick qty modal -->
+<div class="adm-modal-overlay" id="qty-modal" role="dialog" aria-modal="true" aria-label="Ajustar cantidad">
+  <div class="adm-modal qty-modal">
+    <button class="adm-modal-close" id="qty-modal-close"><i class="fa-solid fa-xmark"></i></button>
+    <h3 id="qty-modal-title"><i class="fa-solid fa-plus-minus" style="color:var(--blue-mid)"></i> Ajustar Cantidad</h3>
+    <div class="qty-stepper">
+      <button class="btn-step" id="qty-minus"><i class="fa-solid fa-minus"></i></button>
+      <input id="qty-input" type="number" min="0" value="0" style="border:1px solid var(--gray-200);border-radius:var(--r-md);padding:.4rem"/>
+      <button class="btn-step" id="qty-plus"><i class="fa-solid fa-plus"></i></button>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel-modal" id="qty-modal-cancel">Cancelar</button>
+      <button class="btn-save" id="qty-modal-save"><i class="fa-solid fa-check"></i> Aplicar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast -->
+<div class="adm-toast" id="adm-toast"></div>
+
+<!-- Scripts -->
+<script src="js/admin.js"></script>
+<script>
+/* ============================================================
+   ADMIN INVENTORY PAGE
+   ============================================================ */
+const TYPE_LABELS = {
+  latex:      'Látex',
+  foil:       'Foil',
+  cromado:    'Cromado',
+  burbuja:    'Burbuja',
+  led:        'LED',
+  accesorios: 'Accesorios',
+  otro:       'Otro',
+};
+
+let inventory = [];
+let editingId = null;
+let qtyTargetId = null;
+
+function loadInv()  { inventory = getInventory(); }
+function saveInv()  { saveInventory(inventory); }
+function genId()    { return 'inv_' + Date.now() + '_' + Math.random().toString(36).slice(2,7); }
+
+/* ── Stats ── */
+function updateStats() {
+  const low = inventory.filter(i => i.qty > 0 && i.qty <= i.min);
+  const out = inventory.filter(i => i.qty === 0);
+  document.getElementById('stat-items').textContent       = inventory.length;
+  document.getElementById('stat-total-units').textContent = inventory.reduce((s,i) => s + (i.qty || 0), 0);
+  document.getElementById('stat-low').textContent         = low.length;
+  document.getElementById('stat-out').textContent         = out.length;
+}
+
+/* ── Filters ── */
+function getFilters() {
+  return {
+    search: document.getElementById('inv-search').value.trim().toLowerCase(),
+    type:   document.getElementById('inv-filter-type').value,
+    stock:  document.getElementById('inv-filter-stock').value,
+  };
+}
+
+function applyFilters(list) {
+  const f = getFilters();
+  return list.filter(item => {
+    if (f.search && !( item.name.toLowerCase().includes(f.search) ||
+                       item.color.toLowerCase().includes(f.search) )) return false;
+    if (f.type  && item.type !== f.type)  return false;
+    if (f.stock) {
+      if (f.stock === 'out' && item.qty !== 0) return false;
+      if (f.stock === 'low' && !(item.qty > 0 && item.qty <= item.min)) return false;
+      if (f.stock === 'ok'  && !(item.qty > item.min)) return false;
+    }
+    return true;
+  });
+}
+
+/* ── Stock status helper ── */
+function stockStatus(item) {
+  if (item.qty === 0) return 'out';
+  if (item.qty <= item.min) return 'low';
+  return 'ok';
+}
+
+function stockLabel(st) {
+  return { ok: '✓ Stock OK', low: '⚠ Stock bajo', out: '✕ Sin stock' }[st];
+}
+
+/* ── Render grid ── */
+function renderGrid() {
+  updateStats();
+  const items = applyFilters(inventory);
+  const grid  = document.getElementById('inv-grid');
+  const empty = document.getElementById('inv-empty');
+  if (!items.length) { grid.innerHTML = ''; empty.style.display = 'block'; return; }
+  empty.style.display = 'none';
+
+  grid.innerHTML = items.map(item => {
+    const st  = stockStatus(item);
+    const pct = item.min > 0 ? Math.min(100, Math.round((item.qty / (item.min * 2)) * 100)) : (item.qty > 0 ? 100 : 0);
+    return `
+    <div class="inv-card ${st === 'low' ? 'low-stock' : st === 'out' ? 'out-of-stock' : ''}">
+      <div class="inv-card-color" style="background:${escHtml(item.colorHex || '#9CA3AF')}"></div>
+      <div class="inv-card-body">
+        <div class="inv-card-top">
+          <span class="inv-type-badge">${escHtml(TYPE_LABELS[item.type] || item.type)}</span>
+          ${item.size ? `<span style="font-size:.75rem;color:var(--text-muted)">${escHtml(item.size)}</span>` : ''}
+        </div>
+        <div class="inv-name">${escHtml(item.name)}</div>
+        <div class="inv-color-label">${escHtml(item.color)}${item.brand ? ` &mdash; <span style="font-size:.75rem;font-weight:700;color:var(--purple-mid)">${escHtml(item.brand)}</span>` : ''}</div>
+        <div class="inv-qty">${item.qty}</div>
+        <div class="inv-qty-label">unidades · mín. ${item.min}</div>
+        <div class="inv-stock-bar inv-stock-${st}">
+          <div class="inv-stock-fill" style="width:${pct}%"></div>
+        </div>
+        <div class="inv-status-label stock-${st}">${stockLabel(st)}</div>
+        ${item.notes ? `<div style="font-size:.78rem;color:var(--text-muted);margin-top:.4rem">${escHtml(item.notes)}</div>` : ''}
+      </div>
+      <div class="inv-card-footer">
+        <button class="btn-sm btn-add-qty" onclick="openQtyModal('${item.id}')" title="Ajustar cantidad">
+          <i class="fa-solid fa-plus-minus"></i>
+        </button>
+        <button class="btn-sm btn-edit" onclick="openEditModal('${item.id}')" title="Editar">
+          <i class="fa-solid fa-pen"></i>
+        </button>
+        <button class="btn-sm btn-delete-sm" onclick="deleteItem('${item.id}')" title="Eliminar">
+          <i class="fa-solid fa-trash-can"></i>
+        </button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function escHtml(s) {
+  if (s == null) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+/* ── Add / Edit modal ── */
+function openAddModal() {
+  editingId = null;
+  document.getElementById('inv-modal-title').innerHTML = '<i class="fa-solid fa-plus" style="color:var(--blue-mid)"></i> Nuevo Artículo';
+  document.getElementById('f-type').value     = 'latex';
+  document.getElementById('f-size').value     = '';
+  document.getElementById('f-name').value     = '';
+  document.getElementById('f-brand').value    = 'Sempertex';
+  document.getElementById('f-color').value    = '';
+  document.getElementById('f-color-hex').value = '#F59E0B';
+  document.getElementById('f-qty').value      = '0';
+  document.getElementById('f-min').value      = '10';
+  document.getElementById('f-notes').value    = '';
+  document.getElementById('inv-modal').classList.add('open');
+  document.getElementById('f-name').focus();
+}
+
+function openEditModal(id) {
+  const item = inventory.find(i => i.id === id);
+  if (!item) return;
+  editingId = id;
+  document.getElementById('inv-modal-title').innerHTML = '<i class="fa-solid fa-pen" style="color:var(--blue-mid)"></i> Editar Artículo';
+  document.getElementById('f-type').value      = item.type     || 'latex';
+  document.getElementById('f-size').value      = item.size     || '';
+  document.getElementById('f-name').value      = item.name     || '';
+  document.getElementById('f-brand').value     = item.brand    || '';
+  document.getElementById('f-color').value     = item.color    || '';
+  document.getElementById('f-color-hex').value = item.colorHex || '#9CA3AF';
+  document.getElementById('f-qty').value       = item.qty ?? 0;
+  document.getElementById('f-min').value       = item.min ?? 10;
+  document.getElementById('f-notes').value     = item.notes    || '';
+  document.getElementById('inv-modal').classList.add('open');
+}
+
+function saveItem() {
+  const name = document.getElementById('f-name').value.trim();
+  if (!name) { showToast('El nombre es obligatorio.'); return; }
+  const qty = parseInt(document.getElementById('f-qty').value) || 0;
+  const min = parseInt(document.getElementById('f-min').value) || 0;
+  const data = {
+    type:     document.getElementById('f-type').value,
+    size:     document.getElementById('f-size').value.trim(),
+    name,
+    color:    document.getElementById('f-color').value.trim(),
+    brand:    document.getElementById('f-brand').value.trim(),
+    colorHex: document.getElementById('f-color-hex').value,
+    qty,
+    min,
+    notes:    document.getElementById('f-notes').value.trim(),
+    updatedAt: new Date().toISOString(),
+  };
+  if (editingId) {
+    const idx = inventory.findIndex(i => i.id === editingId);
+    if (idx !== -1) inventory[idx] = { ...inventory[idx], ...data };
+    showToast('Artículo actualizado.');
+  } else {
+    inventory.unshift({ id: genId(), createdAt: new Date().toISOString(), ...data });
+    showToast('Artículo agregado.');
+  }
+  saveInv();
+  renderGrid();
+  closeInvModal();
+}
+
+function deleteItem(id) {
+  if (!confirm('¿Eliminar este artículo del inventario?')) return;
+  inventory = inventory.filter(i => i.id !== id);
+  saveInv();
+  renderGrid();
+  showToast('Artículo eliminado.');
+}
+
+function closeInvModal() {
+  document.getElementById('inv-modal').classList.remove('open');
+  editingId = null;
+}
+
+/* ── Quantity modal ── */
+function openQtyModal(id) {
+  const item = inventory.find(i => i.id === id);
+  if (!item) return;
+  qtyTargetId = id;
+  document.getElementById('qty-modal-title').innerHTML =
+    `<i class="fa-solid fa-plus-minus" style="color:var(--blue-mid)"></i> ${escHtml(item.name)}`;
+  document.getElementById('qty-input').value = item.qty;
+  document.getElementById('qty-modal').classList.add('open');
+  document.getElementById('qty-input').focus();
+}
+
+function applyQty() {
+  const val = parseInt(document.getElementById('qty-input').value);
+  if (isNaN(val) || val < 0) { showToast('Cantidad inválida.'); return; }
+  const item = inventory.find(i => i.id === qtyTargetId);
+  if (!item) return;
+  item.qty = val;
+  item.updatedAt = new Date().toISOString();
+  saveInv();
+  renderGrid();
+  closeQtyModal();
+  showToast(`Cantidad actualizada: ${val} unidades.`);
+}
+
+function closeQtyModal() {
+  document.getElementById('qty-modal').classList.remove('open');
+  qtyTargetId = null;
+}
+
+/* ── Qty stepper ── */
+document.getElementById('qty-minus').addEventListener('click', () => {
+  const inp = document.getElementById('qty-input');
+  inp.value = Math.max(0, (parseInt(inp.value) || 0) - 1);
+});
+document.getElementById('qty-plus').addEventListener('click', () => {
+  const inp = document.getElementById('qty-input');
+  inp.value = (parseInt(inp.value) || 0) + 1;
+});
+
+/* ── Event wiring ── */
+document.getElementById('btn-new-item').addEventListener('click', openAddModal);
+document.getElementById('inv-modal-save').addEventListener('click', saveItem);
+document.getElementById('inv-modal-cancel').addEventListener('click', closeInvModal);
+document.getElementById('inv-modal-close').addEventListener('click', closeInvModal);
+document.getElementById('qty-modal-save').addEventListener('click', applyQty);
+document.getElementById('qty-modal-cancel').addEventListener('click', closeQtyModal);
+document.getElementById('qty-modal-close').addEventListener('click', closeQtyModal);
+
+document.getElementById('inv-modal').addEventListener('click', e => {
+  if (e.target === document.getElementById('inv-modal')) closeInvModal();
+});
+document.getElementById('qty-modal').addEventListener('click', e => {
+  if (e.target === document.getElementById('qty-modal')) closeQtyModal();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeInvModal(); closeQtyModal(); }
+});
+
+['inv-search','inv-filter-type','inv-filter-stock'].forEach(id => {
+  document.getElementById(id)?.addEventListener('input', renderGrid);
+});
+
+/* ── Toast ── */
+let toastTimer = null;
+function showToast(msg) {
+  const el = document.getElementById('adm-toast');
+  el.textContent = msg;
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 3000);
+}
+
+/* ── Init ── */
+loadInv();
+renderGrid();
+</script>
+
+</body>
+</html>

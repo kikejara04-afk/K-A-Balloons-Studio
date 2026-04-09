@@ -1,0 +1,580 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Proyectos — K&amp;A Balloons Studio</title>
+  <meta name="description" content="Galería de proyectos de K&A Balloons Studio: decoraciones para eventos, bodas, cumpleaños, eventos corporativos y más en Bogotá, Colombia."/>
+  <link rel="icon" type="image/jpeg" href="anexos/images/logo/LOGO.jpeg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <link rel="stylesheet" href="css/animations.css"/>
+  <style>
+    .port-page-hero {
+      min-height: 46vh; display: flex; align-items: flex-end;
+      background: var(--grad-hero); position: relative; overflow: hidden;
+      padding-bottom: var(--sp-3xl); padding-top: calc(var(--sp-4xl) + 60px);
+    }
+    .port-page-hero .hero-grid { position: absolute; inset: 0;
+      background-image: linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size: 58px 58px; }
+    .port-page-hero .container { position: relative; z-index: 1; }
+    .port-page-hero h1 { color: var(--white); }
+    .port-page-hero p  { color: rgba(255,255,255,.8); max-width: 560px; }
+    .breadcrumb { display: flex; align-items: center; gap: .4rem; font-size: .8rem; color: rgba(255,255,255,.65); margin-bottom: var(--sp-md); }
+    .breadcrumb a { color: rgba(255,255,255,.65); transition: color var(--tr-fast); }
+    .breadcrumb a:hover { color: var(--white); }
+    .breadcrumb i { font-size: .6rem; }
+
+    /* Uniform square portfolio grid */
+    .port-masonry {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    .port-masonry .port-item {
+      aspect-ratio: 1 / 1;
+      border-radius: var(--r-xl); overflow: hidden; position: relative;
+      background: var(--grad-subtle); cursor: pointer;
+      /* remove any span overrides */
+      grid-column: span 1 !important;
+      grid-row:    span 1 !important;
+    }
+    .port-masonry .port-item img   { width: 100%; height: 100%; object-fit: cover; transition: transform var(--tr-slow); }
+    .port-masonry .port-item:hover img  { transform: scale(1.08); }
+    .port-overlay { position: absolute; inset: 0; background: var(--grad-hero); opacity: 0; transition: opacity var(--tr-base); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--sp-sm); color: var(--white); text-align: center; padding: var(--sp-xl); }
+    .port-masonry .port-item:hover .port-overlay { opacity: 1; }
+    .port-overlay h4 { color: var(--white); }
+    .port-overlay p  { color: rgba(255,255,255,.8); font-size: .8rem; }
+    .port-placeholder { width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 2.5rem; color: var(--gray-400); gap: var(--sp-sm); }
+    .port-placeholder p { font-size: .75rem; }
+
+    @media (max-width: 1100px) {
+      .port-masonry { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    }
+    @media (max-width: 700px)  {
+      .port-masonry { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+    }
+    @media (max-width: 420px)  {
+      .port-masonry { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    }
+
+    /* Stats bar */
+    .stats-bar { display: flex; justify-content: center; gap: var(--sp-3xl); flex-wrap: wrap; padding: var(--sp-3xl) 0; }
+    .stat-item { text-align: center; }
+    .stat-item .n { font-family: var(--font-head); font-size: 2.5rem; font-weight: 700; background: var(--grad-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: block; }
+    .stat-item .l { font-size: .85rem; color: var(--gray-500); margin-top: .2rem; }
+
+    /* Testimonials */
+    .test-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--sp-xl); }
+    @media (max-width: 900px) { .test-grid { grid-template-columns: 1fr; } }
+    .test-card { background: var(--white); border-radius: var(--r-2xl); padding: var(--sp-2xl); box-shadow: var(--sh-md); border: 1px solid var(--gray-100); position: relative; transition: all var(--tr-base); }
+    .test-card:hover { transform: translateY(-4px); box-shadow: var(--sh-lg); }
+    .test-card::before { content: '"'; position: absolute; top: var(--sp-md); right: var(--sp-lg); font-family: var(--font-head); font-size: 5rem; color: var(--purple-light); line-height: 1; }
+    .test-stars { color: var(--gold-mid); font-size: .85rem; margin-bottom: var(--sp-md); }
+    .test-card p { font-size: .9rem; line-height: 1.7; margin-bottom: var(--sp-lg); font-style: italic; color: var(--gray-600); }
+    .test-author { display: flex; align-items: center; gap: var(--sp-md); }
+    .test-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--grad-primary); color: var(--white); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; flex-shrink: 0; }
+    .test-name { font-weight: 600; font-size: .9rem; color: var(--gray-800); }
+    .test-event { font-size: .75rem; color: var(--gray-400); }
+  </style>
+</head>
+<body>
+
+<div id="page-transition" aria-hidden="true"><div id="pt-curtain" class="pt-curtain"></div></div>
+<div id="toast-container" aria-live="polite"></div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Visor de imágenes">
+  <img class="lb-img" src="" alt="Proyecto K&A Balloons Studio"/>
+  <div class="lb-caption"></div>
+  <button class="lb-close" aria-label="Cerrar visor"><i class="fa-solid fa-xmark"></i></button>
+  <button class="lb-nav lb-prev" aria-label="Anterior"><i class="fa-solid fa-chevron-left"></i></button>
+  <button class="lb-nav lb-next" aria-label="Siguiente"><i class="fa-solid fa-chevron-right"></i></button>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar" class="navbar" role="navigation" aria-label="Main navigation">
+  <div class="container navbar-inner">
+    <a href="index.html" class="nav-logo" aria-label="K&A Balloons Studio">
+      <img src="anexos/images/logo/LOGO.jpeg" alt="K&amp;A Balloons Studio" style="height:72px;width:auto"/>
+    </a>
+    <div class="nav-right">
+      <div class="lang-toggle" role="group"><button class="lang-btn active" data-lang="es">ES</button><button class="lang-btn" data-lang="en">EN</button></div>
+      <a id="btn-nav-login" href="login.html" class="btn-nav-login"><i class="fa-solid fa-user" aria-hidden="true"></i><span data-i18n="nav_login">Iniciar Sesión</span></a>
+      <button id="hamburger" class="hamburger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- MENU OVERLAY -->
+<div id="menu-overlay" class="menu-overlay" role="dialog" aria-modal="true" aria-label="Menú">
+  <div id="menu-backdrop" class="menu-backdrop"></div>
+  <div class="menu-panel">
+    <div class="menu-head">
+      <div class="menu-deco-balloons" aria-hidden="true"><div class="deco-balloon"></div><div class="deco-balloon"></div><div class="deco-balloon"></div><div class="deco-balloon"></div></div>
+      <button id="menu-close" class="menu-close" aria-label="Cerrar menú"><i class="fa-solid fa-xmark"></i></button>
+      <div class="menu-brand"><h3>K&amp;A Balloons Studio</h3><p data-i18n="nav_tagline">Diseño con Globos</p></div>
+    </div>
+    <nav class="menu-nav">
+      <ul class="menu-nav-list">
+        <li class="menu-nav-item"><a href="index.html"><span class="nav-icon"><i class="fa-solid fa-house"></i></span><span data-i18n="nav_home">Inicio</span></a></li>
+        <li class="menu-nav-item"><a href="services.html"><span class="nav-icon"><i class="fa-solid fa-star"></i></span><span data-i18n="nav_services">Servicios</span></a></li>
+        <li class="menu-nav-item"><a href="portfolio.html" class="active"><span class="nav-icon"><i class="fa-solid fa-images"></i></span><span data-i18n="nav_portfolio">Proyectos</span></a></li>
+        <div class="menu-sep"></div>
+        <li class="menu-nav-item"><a href="contact.html"><span class="nav-icon"><i class="fa-solid fa-calendar-check"></i></span><span data-i18n="nav_contact">Contacto &amp; Reservas</span></a></li>
+        <div class="menu-sep"></div>
+        <li class="menu-nav-item"><a href="login.html"><span class="nav-icon"><i class="fa-solid fa-right-to-bracket"></i></span><span data-i18n="nav_login">Iniciar Sesión</span></a></li>
+      </ul>
+    </nav>
+    <div class="menu-foot">
+      <div class="menu-socials">
+        <a href="https://www.instagram.com/angelita._.esco" target="_blank" rel="noopener" class="ms-btn instagram" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@kaballoonsstudio" target="_blank" rel="noopener" class="ms-btn tiktok" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://wa.me/573006036940?text=%C2%A1Hola%20K%26A%20Balloons%20Studio!%20%F0%9F%8E%88%20Me%20encantar%C3%ADa%20saber%20m%C3%A1s%20sobre%20sus%20decoraciones%20con%20globos.%20%C2%BFMe%20pueden%20ayudar%3F" target="_blank" rel="noopener" class="ms-btn whatsapp" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+      <p class="menu-copy" data-i18n="foot_rights">© 2025 K&amp;A Balloons Studio</p>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE HERO -->
+<div class="port-page-hero" aria-label="Cabecera de proyectos">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Ruta de navegación">
+      <a href="index.html" data-i18n="nav_home">Inicio</a>
+      <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+      <span data-i18n="nav_portfolio">Proyectos</span>
+    </nav>
+    <h1 data-i18n="port_title">Proyectos <span class="accent">Realizados</span></h1>
+    <p data-i18n="port_sub">Cada proyecto es una historia de alegría. Mira lo que hemos creado.</p>
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<section class="section--alt" aria-label="Estadísticas">
+  <div class="container stats-bar">
+    <div class="stat-item" data-aos="fade-up">
+      <span class="n" data-counter="500" data-prefix="+">+500</span>
+      <span class="l" data-i18n="hero_stat1l">Eventos Realizados</span>
+    </div>
+    <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
+      <span class="n" data-counter="200" data-prefix="+">+200</span>
+      <span class="l" data-i18n="hero_stat2l">Clientes Felices</span>
+    </div>
+    <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
+      <span class="n">5★</span>
+      <span class="l" data-i18n="hero_stat3l">Calificación</span>
+    </div>
+    <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
+      <span class="n" data-counter="50" data-prefix="+">+50</span>
+      <span class="l">Temáticas Distintas</span>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO GALLERY -->
+<section class="section" id="gallery" aria-labelledby="gallery-heading">
+  <div class="container">
+    <header class="section-header" data-aos="fade-up">
+      <span class="section-tag" data-i18n="port_tag">Nuestro Trabajo</span>
+      <h2 id="gallery-heading" class="section-title" data-i18n="port_title">Proyectos <span>Realizados</span></h2>
+      <div class="divider"><div class="dot"></div></div>
+    </header>
+
+    <!-- Filter -->
+    <div class="port-filter" role="group" aria-label="Filtrar por categoría" data-aos="fade-up">
+      <button class="pf-btn active" data-filter="all"    data-i18n="pf_all">Todos</button>
+      <button class="pf-btn" data-filter="events"        data-i18n="pf_events">Eventos</button>
+      <button class="pf-btn" data-filter="gifts"         data-i18n="pf_gifts">Regalos</button>
+      <button class="pf-btn" data-filter="diseno"        data-i18n="pf_diseno">Diseño</button>
+      <button class="pf-btn" data-filter="arch"          data-i18n="pf_arch">Arcos</button>
+      <button class="pf-btn" data-filter="corp"          data-i18n="pf_corp">Corporativo</button>
+    </div>
+
+    <!-- Masonry Grid -->
+    <div class="port-masonry" data-aos="fade-up">
+
+      <!-- 1 — Columna floral gigante -->
+      <div class="port-item tall" data-category="diseno"
+           data-full="anexos/images/proyects/1.jpeg"
+           data-title="Columna Floral Gigante">
+        <img src="anexos/images/proyects/1.jpeg" alt="Columna floral de globos rosa y lila" loading="lazy"/>
+        <div class="port-overlay"><h4>Columna Floral Gigante</h4><p>Torre de globos con flores rosas y lilas</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 2 — Muñeca artística con persona -->
+      <div class="port-item" data-category="diseno"
+           data-full="anexos/images/proyects/2.jpeg"
+           data-title="Figura Artística de Niña">
+        <img src="anexos/images/proyects/2.jpeg" alt="Figura artística de niña en globos" loading="lazy"/>
+        <div class="port-overlay"><h4>Figura Artística de Niña</h4><p>Escultura decorativa de personaje</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 3 — Muñeca sola -->
+      <div class="port-item tall" data-category="diseno"
+           data-full="anexos/images/proyects/3.jpeg"
+           data-title="Muñeca Princesa">
+        <img src="anexos/images/proyects/3.jpeg" alt="Muñeca princesa de globos" loading="lazy"/>
+        <div class="port-overlay"><h4>Muñeca Princesa</h4><p>Escultura de personaje en globos</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 4 — Mosaico arcoíris circular -->
+      <div class="port-item tall" data-category="events"
+           data-full="anexos/images/proyects/4.jpeg"
+           data-title="Mosaico Arcoíris Circular">
+        <img src="anexos/images/proyects/4.jpeg" alt="Mosaico circular arcoíris de globos" loading="lazy"/>
+        <div class="port-overlay"><h4>Mosaico Arcoíris</h4><p>Instalación circular de 500+ globos</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 5 — Columna corporativa -->
+      <div class="port-item" data-category="corp"
+           data-full="anexos/images/proyects/5.jpeg"
+           data-title="Columna Corporativa Azul">
+        <img src="anexos/images/proyects/5.jpeg" alt="Columna de globos azul corporativo" loading="lazy"/>
+        <div class="port-overlay"><h4>Columna Corporativa</h4><p>Elegante columna azul para eventos oficiales</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 13 — Ramo de oficina (landscape) -->
+      <div class="port-item wide" data-category="gifts"
+           data-full="anexos/images/proyects/13.jpeg"
+           data-title="Ramo de Oficina con Ositos">
+        <img src="anexos/images/proyects/13.jpeg" alt="Ramo de flores de globos con ositos de peluche" loading="lazy"/>
+        <div class="port-overlay"><h4>Ramo de Oficina</h4><p>Bouquet floral con ositos y mariposas</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 6 — Escultura helado candy land -->
+      <div class="port-item" data-category="diseno"
+           data-full="anexos/images/proyects/6.jpeg"
+           data-title="Escultura Candy Land">
+        <img src="anexos/images/proyects/6.jpeg" alt="Escultura helado estilo candy land" loading="lazy"/>
+        <div class="port-overlay"><h4>Escultura Candy Land</h4><p>Figura decorativa estilo dulces</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 7 — Arreglo Mafalda -->
+      <div class="port-item" data-category="gifts"
+           data-full="anexos/images/proyects/7.jpeg"
+           data-title="Arreglo Cumpleaños Mafalda 60">
+        <img src="anexos/images/proyects/7.jpeg" alt="Arreglo de cumpleaños Mafalda 60 años" loading="lazy"/>
+        <div class="port-overlay"><h4>Arreglo Mafalda 60 Años</h4><p>Decoración personalizada cumpleaños especial</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 19 — Corazón gigante rojo (tall) -->
+      <div class="port-item tall" data-category="events"
+           data-full="anexos/images/proyects/19.jpeg"
+           data-title="Corazón Gigante Rojo">
+        <img src="anexos/images/proyects/19.jpeg" alt="Instalación corazón gigante en globos rojos" loading="lazy"/>
+        <div class="port-overlay"><h4>Corazón Gigante</h4><p>Instalación romántica de gran formato</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 14 — Corazón con palomas (landscape) -->
+      <div class="port-item wide" data-category="gifts"
+           data-full="anexos/images/proyects/14.jpeg"
+           data-title="Corazón con Palomas">
+        <img src="anexos/images/proyects/14.jpeg" alt="Arreglo corazón de globos con palomas decorativas" loading="lazy"/>
+        <div class="port-overlay"><h4>Corazón con Palomas</h4><p>Arreglo romántico decorativo</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 8 — Globo aerostático regalo -->
+      <div class="port-item" data-category="gifts"
+           data-full="anexos/images/proyects/8.jpeg"
+           data-title="Globo Aerostático Regalo">
+        <img src="anexos/images/proyects/8.jpeg" alt="Globo aerostático con osito y chocolates" loading="lazy"/>
+        <div class="port-overlay"><h4>Globo Aerostático</h4><p>Arreglo regalo con osito y chocolates</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 9 — Árbol navideño corporativo -->
+      <div class="port-item" data-category="corp"
+           data-full="anexos/images/proyects/9.jpeg"
+           data-title="Árbol Navideño Corporativo">
+        <img src="anexos/images/proyects/9.jpeg" alt="Árbol de Navidad de globos con gnomo" loading="lazy"/>
+        <div class="port-overlay"><h4>Árbol Navideño</h4><p>Decoración corporativa navideña con gnomo</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 23 — Arco iris (landscape) -->
+      <div class="port-item wide" data-category="arch"
+           data-full="anexos/images/proyects/23.jpeg"
+           data-title="Arco Iris de Globos">
+        <img src="anexos/images/proyects/23.jpeg" alt="Arco iris de globos con nubes decorativas" loading="lazy"/>
+        <div class="port-overlay"><h4>Arco Iris</h4><p>Arco temático multicolor con nubes</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 10 — Figura Halloween -->
+      <div class="port-item" data-category="diseno"
+           data-full="anexos/images/proyects/10.jpeg"
+           data-title="Figura Halloween">
+        <img src="anexos/images/proyects/10.jpeg" alt="Figura Halloween calabaza conejo en globos" loading="lazy"/>
+        <div class="port-overlay"><h4>Figura Halloween</h4><p>Escultura especial de temporada</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 11 — Calavera Día de Muertos -->
+      <div class="port-item" data-category="diseno"
+           data-full="anexos/images/proyects/11.jpeg"
+           data-title="Calavera Día de Muertos">
+        <img src="anexos/images/proyects/11.jpeg" alt="Calavera artística de Día de Muertos en globos" loading="lazy"/>
+        <div class="port-overlay"><h4>Calavera Artística</h4><p>Día de Muertos en globos multicolor</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 21 — Muñeca Rapunzel (tall) -->
+      <div class="port-item tall" data-category="diseno"
+           data-full="anexos/images/proyects/21.jpeg"
+           data-title="Muñeca Rapunzel">
+        <img src="anexos/images/proyects/21.jpeg" alt="Figura artística princesa Rapunzel en globos" loading="lazy"/>
+        <div class="port-overlay"><h4>Muñeca Rapunzel</h4><p>Escultura artística princesa lila y amarillo</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 20 — Muro colegio (landscape) -->
+      <div class="port-item wide" data-category="corp"
+           data-full="anexos/images/proyects/20.jpeg"
+           data-title="Decoración Colegio Minecraft">
+        <img src="anexos/images/proyects/20.jpeg" alt="Muro de globos verde y negro estilo Minecraft para colegio" loading="lazy"/>
+        <div class="port-overlay"><h4>Decoración Colegio</h4><p>Muro temático Minecraft para institución educativa</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 12 — Ramos en evento -->
+      <div class="port-item" data-category="events"
+           data-full="anexos/images/proyects/12.jpeg"
+           data-title="Ramos en Evento Especial">
+        <img src="anexos/images/proyects/12.jpeg" alt="Personas con ramos de flores de globos en evento" loading="lazy"/>
+        <div class="port-overlay"><h4>Ramos en Evento</h4><p>Arreglos florales para evento especial</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 15 — Figura caniche / mariposa cromada -->
+      <div class="port-item" data-category="diseno"
+           data-full="anexos/images/proyects/15.jpeg"
+           data-title="Figura Cromada Artística">
+        <img src="anexos/images/proyects/15.jpeg" alt="Artista con figura caniche y mariposa cromada" loading="lazy"/>
+        <div class="port-overlay"><h4>Figura Cromada</h4><p>Escultura cromada artística con mariposa</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 28 — Girasol gigante (tall) -->
+      <div class="port-item tall" data-category="diseno"
+           data-full="anexos/images/proyects/28.jpeg"
+           data-title="Girasol Gigante">
+        <img src="anexos/images/proyects/28.jpeg" alt="Escultura de girasol gigante en globos" loading="lazy"/>
+        <div class="port-overlay"><h4>Girasol Gigante</h4><p>Escultura floral de alto detalle</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 16 — Muro Minecraft evento -->
+      <div class="port-item" data-category="events"
+           data-full="anexos/images/proyects/16.jpeg"
+           data-title="Muro Minecraft">
+        <img src="anexos/images/proyects/16.jpeg" alt="Muro de globos verde y negro temática Minecraft" loading="lazy"/>
+        <div class="port-overlay"><h4>Muro Minecraft</h4><p>Decoración temática de videojuegos</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 22 — Bolso artístico (landscape) -->
+      <div class="port-item wide" data-category="diseno"
+           data-full="anexos/images/proyects/22.jpeg"
+           data-title="Bolso Artístico en Globos">
+        <img src="anexos/images/proyects/22.jpeg" alt="Escultura de bolso artístico azul nacarado" loading="lazy"/>
+        <div class="port-overlay"><h4>Bolso Artístico</h4><p>Escultura de bolso azul y plateado nacarado</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 17 — Ramo solo -->
+      <div class="port-item" data-category="gifts"
+           data-full="anexos/images/proyects/17.jpeg"
+           data-title="Ramo de Flores Solo">
+        <img src="anexos/images/proyects/17.jpeg" alt="Ramo de flores de globos sobre mesa" loading="lazy"/>
+        <div class="port-overlay"><h4>Ramo Floral</h4><p>Bouquet de flores de globos artístico</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 24 — Muñeca rizada (tall) -->
+      <div class="port-item tall" data-category="diseno"
+           data-full="anexos/images/proyects/24.jpeg"
+           data-title="Muñeca Rizada">
+        <img src="anexos/images/proyects/24.jpeg" alt="Muñeca artística con cabello rizado en globos" loading="lazy"/>
+        <div class="port-overlay"><h4>Muñeca Rizada</h4><p>Figura con detalles de cabello ondulado</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 18 — Dos mujeres con ramos -->
+      <div class="port-item" data-category="gifts"
+           data-full="anexos/images/proyects/18.jpeg"
+           data-title="Ramos Personalizados">
+        <img src="anexos/images/proyects/18.jpeg" alt="Personas con ramos de flores de globos personalizados" loading="lazy"/>
+        <div class="port-overlay"><h4>Ramos Personalizados</h4><p>Bouquets especiales para regalar</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 35 — Mosaico Papa Noel (tall) -->
+      <div class="port-item tall" data-category="events"
+           data-full="anexos/images/proyects/35.jpeg"
+           data-title="Mosaico Papa Noel">
+        <img src="anexos/images/proyects/35.jpeg" alt="Mosaico de Papa Noel en globos rojos y blancos" loading="lazy"/>
+        <div class="port-overlay"><h4>Mosaico Papa Noel</h4><p>Mosaico navideño de gran formato</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 25 — Mesa corporativa colegio (landscape) -->
+      <div class="port-item wide" data-category="corp"
+           data-full="anexos/images/proyects/25.jpeg"
+           data-title="Decoración Escolar Temática">
+        <img src="anexos/images/proyects/25.jpeg" alt="Mesa directiva con figuritas Mario Bros y mando Xbox" loading="lazy"/>
+        <div class="port-overlay"><h4>Decoración Escolar</h4><p>Mesa directiva con figuras temáticas de videojuegos</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 26 — Bebida tropical -->
+      <div class="port-item" data-category="diseno"
+           data-full="anexos/images/proyects/26.jpeg"
+           data-title="Bebida Tropical">
+        <img src="anexos/images/proyects/26.jpeg" alt="Escultura de bebida tropical fresa con popote" loading="lazy"/>
+        <div class="port-overlay"><h4>Bebida Tropical</h4><p>Escultura tipo smoothie frutal</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 27 — Bouquet en florero -->
+      <div class="port-item" data-category="gifts"
+           data-full="anexos/images/proyects/27.jpeg"
+           data-title="Bouquet en Florero">
+        <img src="anexos/images/proyects/27.jpeg" alt="Ramo de flores de globos en florero de cristal" loading="lazy"/>
+        <div class="port-overlay"><h4>Bouquet en Florero</h4><p>Ramo de flores artístico decorativo</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 32 — Muro azul/rosa (landscape) -->
+      <div class="port-item wide" data-category="events"
+           data-full="anexos/images/proyects/32.jpeg"
+           data-title="Muro de Globos Azul y Rosa">
+        <img src="anexos/images/proyects/32.jpeg" alt="Muro de globos azul rosa y plata" loading="lazy"/>
+        <div class="port-overlay"><h4>Muro Decorativo</h4><p>Panel de globos azul, rosa y plateado</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 29 — Helado cono v2 -->
+      <div class="port-item" data-category="diseno"
+           data-full="anexos/images/proyects/29.jpeg"
+           data-title="Helado de Cono">
+        <img src="anexos/images/proyects/29.jpeg" alt="Escultura de cono de helado rosado en globos" loading="lazy"/>
+        <div class="port-overlay"><h4>Helado de Cono</h4><p>Escultura decorativa con sprinkles</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 30 — León pequeño -->
+      <div class="port-item" data-category="diseno"
+           data-full="anexos/images/proyects/30.jpeg"
+           data-title="León Artístico">
+        <img src="anexos/images/proyects/30.jpeg" alt="Figura de leoncito artístico en globos naranja" loading="lazy"/>
+        <div class="port-overlay"><h4>León Artístico</h4><p>Figura animal decorativa en globos</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 33 — Columna Minnie -->
+      <div class="port-item" data-category="arch"
+           data-full="anexos/images/proyects/33.jpeg"
+           data-title="Columna Minnie Mouse">
+        <img src="anexos/images/proyects/33.jpeg" alt="Columna temática Minnie Mouse rosa y dorado" loading="lazy"/>
+        <div class="port-overlay"><h4>Columna Minnie Mouse</h4><p>Columna temática rosa y dorado cromado</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 31 — Helado verde -->
+      <div class="port-item" data-category="diseno"
+           data-full="anexos/images/proyects/31.jpeg"
+           data-title="Helado Verde">
+        <img src="anexos/images/proyects/31.jpeg" alt="Escultura de cono de helado verde y naranja" loading="lazy"/>
+        <div class="port-overlay"><h4>Helado Verde</h4><p>Escultura cono de helado bicolor</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+      <!-- 34 — Rosa blanca en florero -->
+      <div class="port-item" data-category="gifts"
+           data-full="anexos/images/proyects/34.jpeg"
+           data-title="Rosa Blanca Artística">
+        <img src="anexos/images/proyects/34.jpeg" alt="Rosa blanca de globo en florero con decoración natural" loading="lazy"/>
+        <div class="port-overlay"><h4>Rosa Blanca</h4><p>Flor artística en florero decorativo</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section section--alt" aria-labelledby="test-heading">
+  <div class="container">
+    <header class="section-header" data-aos="fade-up">
+      <span class="section-tag">Testimonios</span>
+      <h2 id="test-heading" class="section-title">Lo que dicen <span>Nuestros Clientes</span></h2>
+      <div class="divider"><div class="dot"></div></div>
+    </header>
+    <div class="test-grid">
+      <div class="test-card" data-aos="fade-up">
+        <div class="test-stars">★★★★★</div>
+        <p>"K&amp;A superó todas mis expectativas. El arco de globos para mi boda fue absolutamente mágico. ¡Todos los invitados preguntaban quién lo hizo!"</p>
+        <div class="test-author">
+          <div class="test-avatar">V</div>
+          <div><div class="test-name">Valentina Ruiz</div><div class="test-event">Boda · Rosales, Bogotá</div></div>
+        </div>
+      </div>
+      <div class="test-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="test-stars">★★★★★</div>
+        <p>"Contratamos K&amp;A para el lanzamiento de nuestra marca y quedamos sorprendidos. Profesionales, puntuales y creativos. ¡100% recomendados!"</p>
+        <div class="test-author">
+          <div class="test-avatar">C</div>
+          <div><div class="test-name">Carlos Mendoza</div><div class="test-event">Evento Corporativo · Zona Rosa</div></div>
+        </div>
+      </div>
+      <div class="test-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="test-stars">★★★★★</div>
+        <p>"La quinceañera de mi hija quedó de ensueño. Atención desde el diseño hasta el último detalle. ¡Gracias K&amp;A por hacer ese día tan especial!"</p>
+        <div class="test-author">
+          <div class="test-avatar">M</div>
+          <div><div class="test-name">Martha Gómez</div><div class="test-event">Quinceañera · Suba, Bogotá</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section cta-banner" aria-label="Llamada a la acción">
+  <div class="container cta-inner" data-aos="fade-up">
+    <h2 data-i18n="cta_title">¿Listo para crear algo increíble?</h2>
+    <p data-i18n="cta_sub">Contáctanos hoy y hagamos de tu próximo evento una experiencia mágica con globos.</p>
+    <div class="cta-btns">
+      <a href="contact.html" class="btn btn-gold"><i class="fa-solid fa-calendar-check" aria-hidden="true"></i><span data-i18n="cta_btn1">Hacer una Reserva</span></a>
+      <a href="services.html" class="btn btn-ghost"><i class="fa-solid fa-star" aria-hidden="true"></i><span data-i18n="nav_services">Ver Servicios</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo"><img src="anexos/images/logo/LOGO.jpeg" alt="K&amp;A Balloons Studio" style="height:64px;width:auto"/></a>
+        <p class="mt-md" data-i18n="foot_desc">Empresa de diseño y decoración con globos en Bogotá, Colombia.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/angelita._.esco" target="_blank" rel="noopener" class="fsoc instagram" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@kaballoonsstudio" target="_blank" rel="noopener" class="fsoc tiktok" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="https://wa.me/573006036940?text=%C2%A1Hola%20K%26A%20Balloons%20Studio!%20%F0%9F%8E%88%20Me%20encantar%C3%ADa%20saber%20m%C3%A1s%20sobre%20sus%20decoraciones%20con%20globos.%20%C2%BFMe%20pueden%20ayudar%3F" target="_blank" rel="noopener" class="fsoc whatsapp" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="foot_links">Navegación</h4>
+        <ul class="footer-links"><li><a href="index.html" data-i18n="nav_home">Inicio</a></li><li><a href="services.html" data-i18n="nav_services">Servicios</a></li><li><a href="portfolio.html" data-i18n="nav_portfolio">Proyectos</a></li><li><a href="contact.html" data-i18n="nav_contact">Contacto</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="foot_services">Servicios</h4>
+        <ul class="footer-links">
+          <li><a href="services.html#eventos" data-i18n="svc1_title">Decoración para Eventos</a></li>
+          <li><a href="services.html#regalos" data-i18n="svc2_title">Arreglos &amp; Regalos</a></li>
+          <li><a href="services.html#arcos"   data-i18n="svc3_title">Arcos &amp; Columnas</a></li>
+          <li><a href="services.html#disenos" data-i18n="svc4_title">Diseños Independientes</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="foot_contact">Contacto</h4>
+        <div class="footer-contact-row"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span>Bogotá, Colombia</span></div>
+        <div class="footer-contact-row"><i class="fa-solid fa-phone" aria-hidden="true"></i><span><a href="tel:+573006036940" style="color:inherit">+57 300 603 6940</a></span></div>
+        <div class="footer-contact-row"><i class="fa-solid fa-envelope" aria-hidden="true"></i><span><a href="mailto:kya.balloonsstudio@gmail.com" style="color:inherit">kya.balloonsstudio@gmail.com</a></span></div>
+        <div class="footer-contact-row"><i class="fa-solid fa-clock" aria-hidden="true"></i><span data-i18n="cinfo_hours_v">Lun–Sáb: 8am – 7pm</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p data-i18n="foot_rights">© 2025 K&amp;A Balloons Studio. Todos los derechos reservados.</p>
+      <div class="footer-bottom-links"><a href="privacidad.html" data-i18n="foot_privacy">Privacidad</a><a href="terms.html" data-i18n="foot_terms">Términos</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/translations.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

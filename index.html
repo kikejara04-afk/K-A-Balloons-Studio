@@ -1,1 +1,587 @@
-Hola
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>K&amp;A Balloons Studio — Diseño y Decoración con Globos en Bogotá</title>
+  <meta name="description" content="K&A Balloons Studio: diseño y decoración con globos para eventos, regalos y celebraciones en Bogotá, Colombia. Cumpleaños, bodas, eventos corporativos y más."/>
+  <meta name="keywords" content="globos Bogotá, decoración globos, eventos globos, arreglos globos Colombia, K&A Balloons"/>
+  <meta property="og:title"       content="K&amp;A Balloons Studio"/>
+  <meta property="og:description" content="Diseño y decoración con globos en Bogotá, Colombia."/>
+  <meta property="og:image"       content="anexos/images/og-image.jpg"/>
+  <link rel="icon" type="image/jpeg" href="anexos/images/logo/LOGO.jpeg"/>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/styles.css"/>
+  <link rel="stylesheet" href="css/animations.css"/>
+</head>
+<body>
+
+<!-- ============================================================
+     PAGE TRANSITION CURTAIN
+     ============================================================ -->
+<div id="page-transition" aria-hidden="true">
+  <div id="pt-curtain" class="pt-curtain"></div>
+</div>
+
+<!-- ============================================================
+     TOAST CONTAINER
+     ============================================================ -->
+<div id="toast-container" aria-live="polite"></div>
+
+<!-- ============================================================
+     NAVIGATION
+     ============================================================ -->
+<nav id="navbar" class="navbar" role="navigation" aria-label="Main navigation">
+  <div class="container navbar-inner">
+
+    <!-- Logo -->
+    <a href="index.html" class="nav-logo" aria-label="K&A Balloons Studio - Inicio">
+      <img src="anexos/images/logo/LOGO.jpeg" alt="K&amp;A Balloons Studio Logo" style="height:72px;width:auto"/>
+    </a>
+
+    <!-- Right controls -->
+    <div class="nav-right">
+      <!-- Language Toggle -->
+      <div class="lang-toggle" role="group" aria-label="Selección de idioma">
+        <button class="lang-btn active" data-lang="es" aria-label="Español">ES</button>
+        <button class="lang-btn"        data-lang="en" aria-label="English">EN</button>
+      </div>
+
+      <!-- Login -->
+      <a id="btn-nav-login" href="login.html" class="btn-nav-login" aria-label="Iniciar sesión">
+        <i class="fa-solid fa-user" aria-hidden="true"></i>
+        <span data-i18n="nav_login">Iniciar Sesión</span>
+      </a>
+
+      <!-- Hamburger -->
+      <button id="hamburger" class="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu-overlay">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================================================
+     HAMBURGER MENU OVERLAY
+     ============================================================ -->
+<div id="menu-overlay" class="menu-overlay" role="dialog" aria-label="Menú de navegación" aria-modal="true">
+  <div id="menu-backdrop" class="menu-backdrop"></div>
+  <div class="menu-panel">
+
+    <!-- Panel header -->
+    <div class="menu-head">
+      <div class="menu-deco-balloons" aria-hidden="true">
+        <div class="deco-balloon"></div>
+        <div class="deco-balloon"></div>
+        <div class="deco-balloon"></div>
+        <div class="deco-balloon"></div>
+      </div>
+      <button id="menu-close" class="menu-close" aria-label="Cerrar menú">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <div class="menu-brand">
+        <h3>K&amp;A Balloons Studio</h3>
+        <p data-i18n="nav_tagline">Diseño con Globos</p>
+      </div>
+    </div>
+
+    <!-- Nav links -->
+    <nav class="menu-nav" aria-label="Menú principal">
+      <ul class="menu-nav-list">
+        <li class="menu-nav-item">
+          <a href="index.html">
+            <span class="nav-icon"><i class="fa-solid fa-house"></i></span>
+            <span data-i18n="nav_home">Inicio</span>
+          </a>
+        </li>
+        <li class="menu-nav-item">
+          <a href="services.html">
+            <span class="nav-icon"><i class="fa-solid fa-star"></i></span>
+            <span data-i18n="nav_services">Servicios</span>
+          </a>
+        </li>
+        <li class="menu-nav-item">
+          <a href="portfolio.html">
+            <span class="nav-icon"><i class="fa-solid fa-images"></i></span>
+            <span data-i18n="nav_portfolio">Proyectos</span>
+          </a>
+        </li>
+        <div class="menu-sep"></div>
+        <li class="menu-nav-item">
+          <a href="contact.html">
+            <span class="nav-icon"><i class="fa-solid fa-calendar-check"></i></span>
+            <span data-i18n="nav_contact">Contacto &amp; Reservas</span>
+          </a>
+        </li>
+        <div class="menu-sep"></div>
+        <li class="menu-nav-item">
+          <a href="login.html">
+            <span class="nav-icon"><i class="fa-solid fa-right-to-bracket"></i></span>
+            <span data-i18n="nav_login">Iniciar Sesión</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Panel footer -->
+    <div class="menu-foot">
+      <div class="menu-socials">
+        <a href="https://www.instagram.com/angelita._.esco" target="_blank" rel="noopener noreferrer" class="ms-btn instagram" aria-label="Instagram">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="https://www.tiktok.com/@kaballoonsstudio" target="_blank" rel="noopener noreferrer" class="ms-btn tiktok" aria-label="TikTok">
+          <i class="fa-brands fa-tiktok"></i>
+        </a>
+        <a href="https://wa.me/573006036940?text=%C2%A1Hola%20K%26A%20Balloons%20Studio!%20%F0%9F%8E%88%20Me%20encantar%C3%ADa%20saber%20m%C3%A1s%20sobre%20sus%20decoraciones%20con%20globos.%20%C2%BFMe%20pueden%20ayudar%3F" target="_blank" rel="noopener noreferrer" class="ms-btn whatsapp" aria-label="WhatsApp">
+          <i class="fa-brands fa-whatsapp"></i>
+        </a>
+      </div>
+      <p class="menu-copy" data-i18n="foot_rights">© 2025 K&amp;A Balloons Studio</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     HERO SECTION
+     ============================================================ -->
+<section class="hero" id="hero" aria-label="Sección principal">
+  <div class="hero-bg">
+    <div class="hero-grid" aria-hidden="true"></div>
+    <!-- CSS Balloon shapes -->
+    <div class="hero-balloon hb-1" aria-hidden="true"><div class="balloon-string"></div></div>
+    <div class="hero-balloon hb-2" aria-hidden="true"><div class="balloon-string"></div></div>
+    <div class="hero-balloon hb-3" aria-hidden="true"><div class="balloon-string"></div></div>
+    <div class="hero-balloon hb-4" aria-hidden="true"><div class="balloon-string"></div></div>
+    <div class="hero-balloon hb-5" aria-hidden="true"><div class="balloon-string"></div></div>
+    <!-- Confetti -->
+    <div class="confetti-wrap" aria-hidden="true"></div>
+  </div>
+
+  <div class="container hero-content">
+    <div class="hero-eyebrow">
+      <span class="pulse" aria-hidden="true"></span>
+      <span data-i18n="hero_eyebrow">Bogotá, Colombia · Desde 2020</span>
+    </div>
+
+    <h1 class="hero-title">
+      <span data-i18n="hero_title1">Creamos Momentos</span><br/>
+      <span data-i18n="hero_title2">Mágicos con</span>
+      <span class="accent"> <span data-i18n="hero_title3">Globos</span></span>
+    </h1>
+
+    <p class="hero-desc" data-i18n="hero_desc">
+      Diseñamos y decoramos con globos para hacer cada evento, regalo o celebración una experiencia única e inolvidable.
+    </p>
+
+    <div class="hero-cta">
+      <a href="services.html" class="btn btn-gold" aria-label="Ver nuestros servicios">
+        <i class="fa-solid fa-star" aria-hidden="true"></i>
+        <span data-i18n="hero_btn1">Ver Servicios</span>
+      </a>
+      <a href="contact.html" class="btn btn-ghost" aria-label="Hacer una reserva">
+        <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+        <span data-i18n="hero_btn2">Reservar Ahora</span>
+      </a>
+    </div>
+
+    <div class="hero-stats" aria-label="Estadísticas">
+      <div class="hstat">
+        <span class="n" id="stat-eventos" data-counter="7" data-prefix="+" aria-label="7 eventos realizados">7</span>
+        <span class="l" data-i18n="hero_stat1l">Eventos Realizados</span>
+      </div>
+      <div class="hstat">
+        <span class="n" data-counter="200" data-prefix="+" aria-label="Más de 200 clientes">200</span>
+        <span class="l" data-i18n="hero_stat2l">Clientes Felices</span>
+      </div>
+      <div class="hstat">
+        <span class="n" aria-label="Calificación 5 estrellas">5★</span>
+        <span class="l" data-i18n="hero_stat3l">Calificación</span>
+      </div>
+      <div class="hstat">
+        <span class="n" data-counter="4" data-prefix="+" aria-label="Más de 4 años">4</span>
+        <span class="l" data-i18n="hero_stat4l">Años de Experiencia</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll hint -->
+  <div class="hero-scroll-hint" aria-hidden="true">
+    <div class="scroll-mouse"><div class="scroll-dot"></div></div>
+    <span data-i18n="hero_scroll">Desplazar</span>
+  </div>
+</section>
+
+<!-- ============================================================
+     ABOUT SECTION
+     ============================================================ -->
+<section class="section" id="about" aria-labelledby="about-heading">
+  <div class="container">
+    <div class="about-grid">
+
+      <!-- Visual (hidden on mobile via CSS) -->
+      <div class="about-visual" data-aos="fade-right">
+        <div class="about-frame">
+          <img src="anexos/images/proyects/19.jpeg" alt="Instalación corazón gigante — K&amp;A Balloons Studio" loading="lazy"/>
+        </div>
+        <div class="about-corner" aria-hidden="true"></div>
+        <div class="about-badge" aria-label="100% hecho con amor">
+          <div class="ab-icon" aria-hidden="true">🎀</div>
+          <div class="ab-text">
+            <strong data-i18n="about_badge_n">100%</strong>
+            <span data-i18n="about_badge_l">Hecho con Amor</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content -->
+      <div class="about-content" data-aos="fade-left">
+        <span class="section-tag" data-i18n="about_tag">Quiénes Somos</span>
+        <h2 id="about-heading" class="section-title mt-md" data-i18n="about_title">
+          Pasión por los <span>Globos &amp; Diseño</span>
+        </h2>
+        <div class="divider"><div class="dot"></div></div>
+
+        <p class="mt-md" data-i18n="about_desc">
+          En K&amp;A Balloons Studio transformamos cualquier espacio con arte con globos. Cada proyecto es una obra única diseñada con dedicación, creatividad y amor por los detalles.
+        </p>
+        <p class="mt-md" data-i18n="about_desc2">
+          Desde pequeñas decoraciones de cumpleaños hasta grandes instalaciones para eventos corporativos, traemos alegría y color a cada celebración en Bogotá y alrededores.
+        </p>
+
+        <div class="about-feats">
+          <div class="feat-card">
+            <div class="feat-ico" aria-hidden="true">🎨</div>
+            <h4 data-i18n="feat1_title">Diseño Personalizado</h4>
+            <p data-i18n="feat1_desc">Cada decoración es única y adaptada a tu visión y presupuesto.</p>
+          </div>
+          <div class="feat-card">
+            <div class="feat-ico" aria-hidden="true">⏰</div>
+            <h4 data-i18n="feat2_title">Puntualidad Garantizada</h4>
+            <p data-i18n="feat2_desc">Llegamos siempre a tiempo para que no te preocupes por nada.</p>
+          </div>
+          <div class="feat-card">
+            <div class="feat-ico" aria-hidden="true">✨</div>
+            <h4 data-i18n="feat3_title">Materiales Premium</h4>
+            <p data-i18n="feat3_desc">Globos de alta calidad que duran más y lucen espectaculares.</p>
+          </div>
+          <div class="feat-card">
+            <div class="feat-ico" aria-hidden="true">🤝</div>
+            <h4 data-i18n="feat4_title">Atención Personalizada</h4>
+            <p data-i18n="feat4_desc">Te acompañamos desde el diseño hasta la instalación final.</p>
+          </div>
+        </div>
+
+        <div class="mt-2xl">
+          <a href="services.html" class="btn btn-primary">
+            <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+            <span data-i18n="svc_all">Ver Todos los Servicios</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     MISSION · VISION · VALUES
+     ============================================================ -->
+<section class="section section--alt" id="mvv" aria-labelledby="mvv-heading">
+  <div class="container">
+    <header class="section-header" data-aos="fade-up">
+      <span class="section-tag" data-i18n="mvv_tag">Nuestra Identidad</span>
+      <h2 id="mvv-heading" class="section-title" data-i18n="mvv_title">
+        Misión, Visión &amp; <span>Valores</span>
+      </h2>
+      <div class="divider"><div class="dot"></div></div>
+      <p class="section-sub" data-i18n="mvv_sub">
+        Los principios que guían cada globo que inflamos y cada sonrisa que creamos.
+      </p>
+    </header>
+
+    <div class="mvv-grid">
+      <!-- Mission -->
+      <article class="mvv-card mission" data-aos="fade-up">
+        <div class="mvv-ico" aria-hidden="true">🚀</div>
+        <h3 data-i18n="mission_title">Misión</h3>
+        <p data-i18n="mission_text">
+          Brindar experiencias de decoración con globos únicas, creativas y de alta calidad, haciendo de cada evento una celebración memorable que supere las expectativas de nuestros clientes.
+        </p>
+      </article>
+
+      <!-- Vision -->
+      <article class="mvv-card vision" data-aos="fade-up" data-aos-delay="100">
+        <div class="mvv-ico" aria-hidden="true">🌟</div>
+        <h3 data-i18n="vision_title">Visión</h3>
+        <p data-i18n="vision_text">
+          Ser la empresa líder en diseño y decoración con globos en Bogotá y Colombia, reconocida por su creatividad, innovación y compromiso con la excelencia en cada proyecto.
+        </p>
+      </article>
+
+      <!-- Values & Objectives -->
+      <article class="mvv-card values" data-aos="fade-up" data-aos-delay="200">
+        <div class="mvv-ico" aria-hidden="true">💎</div>
+        <h3 data-i18n="values_title">Valores &amp; Objetivos</h3>
+        <ul class="val-list" role="list">
+          <li data-i18n="val1">Creatividad e Innovación</li>
+          <li data-i18n="val2">Calidad Asegurada</li>
+          <li data-i18n="val3">Puntualidad y Responsabilidad</li>
+          <li data-i18n="val4">Atención al Cliente</li>
+          <li data-i18n="val5">Compromiso con la Alegría</li>
+          <li data-i18n="val6">Sostenibilidad</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SERVICES PREVIEW
+     ============================================================ -->
+<section class="section" id="services" aria-labelledby="svc-heading">
+  <div class="container">
+    <header class="section-header" data-aos="fade-up">
+      <span class="section-tag" data-i18n="svc_tag">Lo que Ofrecemos</span>
+      <h2 id="svc-heading" class="section-title" data-i18n="svc_title">
+        Nuestros <span>Servicios</span>
+      </h2>
+      <div class="divider"><div class="dot"></div></div>
+      <p class="section-sub" data-i18n="svc_sub">
+        Diseños únicos para cada ocasión, creados con pasión y calidad premium.
+      </p>
+    </header>
+
+    <div class="services-grid">
+      <!-- Service 1 -->
+      <article class="svc-card" data-aos="fade-up">
+        <div class="svc-img">
+          <img src="anexos/images/proyects/16.jpeg" alt="Decoración para eventos con globos" loading="lazy"/>
+        </div>
+        <div class="svc-body">
+          <span class="svc-tag" data-i18n="svc1_tag">Eventos</span>
+          <h3 data-i18n="svc1_title">Decoración para Eventos</h3>
+          <p data-i18n="svc1_desc">Cumpleaños, bodas, grados, quince años, eventos corporativos y más. Transformamos cualquier espacio en una experiencia visual espectacular.</p>
+          <a href="services.html" class="svc-link" data-i18n="svc_more">Ver Más →</a>
+        </div>
+      </article>
+
+      <!-- Service 2 -->
+      <article class="svc-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="svc-img">
+          <img src="anexos/images/proyects/8.jpeg" alt="Arreglos con globos como regalo" loading="lazy"/>
+        </div>
+        <div class="svc-body">
+          <span class="svc-tag" data-i18n="svc2_tag">Regalos</span>
+          <h3 data-i18n="svc2_title">Arreglos &amp; Regalos</h3>
+          <p data-i18n="svc2_desc">Bouquets de globos, cajas sorpresa, arreglos personalizados y detalles especiales para sorprender a quien más quieres.</p>
+          <a href="services.html" class="svc-link" data-i18n="svc_more">Ver Más →</a>
+        </div>
+      </article>
+
+      <!-- Service 3 -->
+      <article class="svc-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="svc-img">
+          <img src="anexos/images/proyects/23.jpeg" alt="Arco iris con globos para evento" loading="lazy"/>
+        </div>
+        <div class="svc-body">
+          <span class="svc-tag" data-i18n="svc3_tag">Arquitectura</span>
+          <h3 data-i18n="svc3_title">Arcos &amp; Columnas</h3>
+          <p data-i18n="svc3_desc">Arcos orgánicos, columnas temáticas, guirnaldas y estructuras de globos para entradas, mesas y escenarios.</p>
+          <a href="services.html" class="svc-link" data-i18n="svc_more">Ver Más →</a>
+        </div>
+      </article>
+    </div>
+
+    <div class="text-center mt-2xl" data-aos="fade-up">
+      <a href="services.html" class="btn btn-primary">
+        <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+        <span data-i18n="svc_all">Ver Todos los Servicios</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     PORTFOLIO PREVIEW
+     ============================================================ -->
+<section class="section section--alt" id="portfolio" aria-labelledby="port-heading">
+  <div class="container">
+    <header class="section-header" data-aos="fade-up">
+      <span class="section-tag" data-i18n="port_tag">Nuestro Trabajo</span>
+      <h2 id="port-heading" class="section-title" data-i18n="port_title">
+        Proyectos <span>Realizados</span>
+      </h2>
+      <div class="divider"><div class="dot"></div></div>
+      <p class="section-sub" data-i18n="port_sub">
+        Cada proyecto es una historia de alegría. Mira lo que hemos creado.
+      </p>
+    </header>
+
+    <div class="port-grid" data-aos="fade-up">
+      <div class="port-item" data-category="events">
+        <img src="anexos/images/proyects/4.jpeg" alt="Mosaico circular arcoíris de globos" loading="lazy"/>
+        <div class="port-overlay">
+          <h4>Decoración de Evento</h4>
+          <p>Mosaico circular arcoíris · Gran instalación</p>
+        </div>
+      </div>
+      <div class="port-item" data-category="diseno">
+          <img src="anexos/images/proyects/1.jpeg" alt="Columna floral con globos" loading="lazy"/>
+        <div class="port-overlay">
+          <h4>Columna Floral Gigante</h4>
+          <p>Torre decorativa con flores de globos</p>
+        </div>
+      </div>
+      <div class="port-item" data-category="gifts">
+        <img src="anexos/images/proyects/17.jpeg" alt="Ramo de flores de globos" loading="lazy"/>
+        <div class="port-overlay">
+          <h4>Ramo Floral Artístico</h4>
+          <p>Bouquet de flores en globos de alta calidad</p>
+        </div>
+      </div>
+      <div class="port-item" data-category="corp">
+        <img src="anexos/images/proyects/9.jpeg" alt="Árbol navideño corporativo de globos" loading="lazy"/>
+        <div class="port-overlay">
+          <h4>Árbol Navideño Corporativo</h4>
+          <p>Decoración empresarial de temporada</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-2xl" data-aos="fade-up">
+      <a href="portfolio.html" class="btn btn-secondary">
+        <i class="fa-solid fa-images" aria-hidden="true"></i>
+        <span data-i18n="port_see_all">Ver Galería Completa</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     CTA BANNER
+     ============================================================ -->
+<section class="section cta-banner" id="cta" aria-label="Llamada a la acción">
+  <div class="container cta-inner" data-aos="fade-up">
+    <h2 data-i18n="cta_title">¿Listo para crear algo increíble?</h2>
+    <p data-i18n="cta_sub">Contáctanos hoy y hagamos de tu próximo evento una experiencia mágica con globos.</p>
+    <div class="cta-btns">
+      <a href="contact.html" class="btn btn-gold">
+        <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+        <span data-i18n="cta_btn1">Hacer una Reserva</span>
+      </a>
+      <a href="contact.html#contact-form" class="btn btn-ghost">
+        <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+        <span data-i18n="cta_btn2">Contáctanos</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+
+      <!-- Brand -->
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" aria-label="K&A Balloons Studio">
+          <img src="anexos/images/logo/LOGO.jpeg" alt="K&amp;A Balloons Studio" style="height:64px;width:auto"/>
+        </a>
+        <p class="mt-md" data-i18n="foot_desc">
+          Empresa de diseño y decoración con globos en Bogotá, Colombia. Hacemos de cada evento una celebración especial.
+        </p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/angelita._.esco" target="_blank" rel="noopener noreferrer" class="fsoc instagram" aria-label="Instagram de K&A Balloons Studio">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+          <a href="https://www.tiktok.com/@kaballoonsstudio" target="_blank" rel="noopener noreferrer" class="fsoc tiktok" aria-label="TikTok de K&A Balloons Studio">
+            <i class="fa-brands fa-tiktok"></i>
+          </a>
+          <a href="https://wa.me/573006036940?text=%C2%A1Hola%20K%26A%20Balloons%20Studio!%20%F0%9F%8E%88%20Me%20encantar%C3%ADa%20saber%20m%C3%A1s%20sobre%20sus%20decoraciones%20con%20globos.%20%C2%BFMe%20pueden%20ayudar%3F" target="_blank" rel="noopener noreferrer" class="fsoc whatsapp" aria-label="WhatsApp de K&A Balloons Studio">
+            <i class="fa-brands fa-whatsapp"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Navigation -->
+      <div class="footer-col">
+        <h4 data-i18n="foot_links">Navegación</h4>
+        <ul class="footer-links" role="list">
+          <li><a href="index.html" data-i18n="nav_home">Inicio</a></li>
+          <li><a href="services.html" data-i18n="nav_services">Servicios</a></li>
+          <li><a href="portfolio.html" data-i18n="nav_portfolio">Proyectos</a></li>
+          <li><a href="contact.html" data-i18n="nav_contact">Contacto</a></li>
+          <li><a href="login.html" data-i18n="nav_login">Iniciar Sesión</a></li>
+        </ul>
+      </div>
+
+      <!-- Services -->
+      <div class="footer-col">
+        <h4 data-i18n="foot_services">Servicios</h4>
+        <ul class="footer-links" role="list">
+          <li><a href="services.html" data-i18n="svc1_title">Decoración para Eventos</a></li>
+          <li><a href="services.html" data-i18n="svc2_title">Arreglos &amp; Regalos</a></li>
+          <li><a href="services.html" data-i18n="svc3_title">Arcos &amp; Columnas</a></li>
+          <li><a href="services.html" data-i18n="svc4_title">Diseños Independientes</a></li>
+          <li><a href="services.html" data-i18n="svc5_title">Eventos Corporativos</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div class="footer-col">
+        <h4 data-i18n="foot_contact">Contacto</h4>
+        <div class="footer-contact-row">
+          <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+          <span>Bogotá, Colombia</span>
+        </div>
+        <div class="footer-contact-row">
+          <i class="fa-solid fa-phone" aria-hidden="true"></i>
+          <span><a href="tel:+573006036940" style="color:inherit">+57 300 603 6940</a></span>
+        </div>
+        <div class="footer-contact-row">
+          <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+          <span><a href="mailto:kya.balloonsstudio@gmail.com" style="color:inherit">kya.balloonsstudio@gmail.com</a></span>
+        </div>
+        <div class="footer-contact-row">
+          <i class="fa-solid fa-clock" aria-hidden="true"></i>
+          <span data-i18n="cinfo_hours_v">Lun–Sáb: 8am – 7pm</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p data-i18n="foot_rights">© 2025 K&amp;A Balloons Studio. Todos los derechos reservados.</p>
+      <div class="footer-bottom-links">
+        <a href="privacidad.html" data-i18n="foot_privacy">Privacidad</a>
+        <a href="terms.html" data-i18n="foot_terms">Términos</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============================================================
+     SCRIPTS
+     ============================================================ -->
+<script src="js/translations.js"></script>
+<script>
+// Set eventos counter from localStorage before main.js initializes counters
+(function() {
+  var c = parseInt(localStorage.getItem('ka_eventos_counter') || '7');
+  if (c < 7) c = 7; // minimum base value
+  var el = document.getElementById('stat-eventos');
+  if (el) { el.setAttribute('data-counter', c); el.textContent = c; }
+})();
+</script>
+<script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,393 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Servicios — K&amp;A Balloons Studio</title>
+  <meta name="description" content="Descubre todos los servicios de K&amp;A Balloons Studio: decoración para eventos, arreglos con globos, arcos, columnas y diseños personalizados en Bogotá."/>
+  <link rel="icon" type="image/jpeg" href="anexos/images/logo/LOGO.jpeg"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <link rel="stylesheet" href="css/styles.css"/>
+  <link rel="stylesheet" href="css/animations.css"/>
+  <style>
+    /* Services page specific */
+    .svc-page-hero {
+      min-height: 46vh; display: flex; align-items: flex-end;
+      background: var(--grad-hero); position: relative; overflow: hidden;
+      padding-bottom: var(--sp-3xl); padding-top: calc(var(--sp-4xl) + 60px);
+    }
+    .svc-page-hero .hero-grid { position: absolute; inset: 0; background-image:
+      linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+      background-size: 58px 58px; }
+    .svc-page-hero .container { position: relative; z-index: 1; }
+    .svc-page-hero h1 { color: var(--white); }
+    .svc-page-hero p  { color: rgba(255,255,255,.8); max-width: 560px; }
+
+    /* Breadcrumb */
+    .breadcrumb { display: flex; align-items: center; gap: .4rem;
+      font-size: .8rem; color: rgba(255,255,255,.65); margin-bottom: var(--sp-md); }
+    .breadcrumb a { color: rgba(255,255,255,.65); transition: color var(--tr-fast); }
+    .breadcrumb a:hover { color: var(--white); }
+    .breadcrumb i { font-size: .6rem; }
+
+    /* Services full grid */
+    .svc-full-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-xl); }
+    @media (max-width: 1024px) { .svc-full-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 640px)  { .svc-full-grid { grid-template-columns: 1fr; } }
+
+    /* Feature list inside card */
+    .svc-features { list-style: none; margin-top: var(--sp-md); display: flex; flex-direction: column; gap: .4rem; }
+    .svc-features li { display: flex; align-items: center; gap: var(--sp-sm); font-size: .83rem; color: var(--text-muted); }
+    .svc-features li::before { content: '✓'; color: var(--blue-mid); font-weight: 700; }
+
+    /* How it works */
+    .how-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: var(--sp-xl); text-align: center; }
+    @media (max-width: 768px) { .how-grid { grid-template-columns: repeat(2,1fr); } }
+    @media (max-width: 480px) { .how-grid { grid-template-columns: 1fr; } }
+    .how-step { position: relative; }
+    .how-step:not(:last-child)::after {
+      content: '';
+      position: absolute; top: 28px; left: calc(100% - 2px);
+      width: calc(var(--sp-xl) + 4px); height: 2px;
+      background: var(--grad-primary); opacity: .3;
+    }
+    @media (max-width: 768px) { .how-step:not(:last-child)::after { display: none; } }
+    .how-num {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--grad-primary); color: var(--white);
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-head); font-size: 1.25rem; font-weight: 700;
+      margin: 0 auto var(--sp-md);
+      box-shadow: var(--sh-blue);
+    }
+    .how-step h4 { font-size: .95rem; margin-bottom: var(--sp-sm); }
+    .how-step p  { font-size: .83rem; }
+  </style>
+</head>
+<body>
+
+<div id="page-transition" aria-hidden="true"><div id="pt-curtain" class="pt-curtain"></div></div>
+<div id="toast-container" aria-live="polite"></div>
+
+<!-- NAVBAR -->
+<nav id="navbar" class="navbar" role="navigation" aria-label="Main navigation">
+  <div class="container navbar-inner">
+    <a href="index.html" class="nav-logo" aria-label="K&A Balloons Studio - Inicio">
+      <img src="anexos/images/logo/LOGO.jpeg" alt="K&amp;A Balloons Studio" style="height:72px;width:auto"/>
+    </a>
+    <div class="nav-right">
+      <div class="lang-toggle" role="group" aria-label="Selección de idioma">
+        <button class="lang-btn active" data-lang="es">ES</button>
+        <button class="lang-btn"        data-lang="en">EN</button>
+      </div>
+      <a id="btn-nav-login" href="login.html" class="btn-nav-login">
+        <i class="fa-solid fa-user" aria-hidden="true"></i>
+        <span data-i18n="nav_login">Iniciar Sesión</span>
+      </a>
+      <button id="hamburger" class="hamburger" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MENU OVERLAY -->
+<div id="menu-overlay" class="menu-overlay" role="dialog" aria-modal="true" aria-label="Menú">
+  <div id="menu-backdrop" class="menu-backdrop"></div>
+  <div class="menu-panel">
+    <div class="menu-head">
+      <div class="menu-deco-balloons" aria-hidden="true">
+        <div class="deco-balloon"></div><div class="deco-balloon"></div>
+        <div class="deco-balloon"></div><div class="deco-balloon"></div>
+      </div>
+      <button id="menu-close" class="menu-close" aria-label="Cerrar menú"><i class="fa-solid fa-xmark"></i></button>
+      <div class="menu-brand">
+        <h3>K&amp;A Balloons Studio</h3>
+        <p data-i18n="nav_tagline">Diseño con Globos</p>
+      </div>
+    </div>
+    <nav class="menu-nav">
+      <ul class="menu-nav-list">
+        <li class="menu-nav-item"><a href="index.html"><span class="nav-icon"><i class="fa-solid fa-house"></i></span><span data-i18n="nav_home">Inicio</span></a></li>
+        <li class="menu-nav-item"><a href="services.html" class="active"><span class="nav-icon"><i class="fa-solid fa-star"></i></span><span data-i18n="nav_services">Servicios</span></a></li>
+        <li class="menu-nav-item"><a href="portfolio.html"><span class="nav-icon"><i class="fa-solid fa-images"></i></span><span data-i18n="nav_portfolio">Proyectos</span></a></li>
+        <div class="menu-sep"></div>
+        <li class="menu-nav-item"><a href="contact.html"><span class="nav-icon"><i class="fa-solid fa-calendar-check"></i></span><span data-i18n="nav_contact">Contacto &amp; Reservas</span></a></li>
+        <div class="menu-sep"></div>
+        <li class="menu-nav-item"><a href="login.html"><span class="nav-icon"><i class="fa-solid fa-right-to-bracket"></i></span><span data-i18n="nav_login">Iniciar Sesión</span></a></li>
+      </ul>
+    </nav>
+    <div class="menu-foot">
+      <div class="menu-socials">
+        <a href="https://www.instagram.com/angelita._.esco" target="_blank" rel="noopener" class="ms-btn instagram" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+        <a href="https://www.tiktok.com/@kaballoonsstudio" target="_blank" rel="noopener" class="ms-btn tiktok" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+        <a href="https://wa.me/573006036940?text=%C2%A1Hola%20K%26A%20Balloons%20Studio!%20%F0%9F%8E%88%20Me%20encantar%C3%ADa%20saber%20m%C3%A1s%20sobre%20sus%20decoraciones%20con%20globos.%20%C2%BFMe%20pueden%20ayudar%3F" target="_blank" rel="noopener" class="ms-btn whatsapp" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+      </div>
+      <p class="menu-copy" data-i18n="foot_rights">© 2025 K&amp;A Balloons Studio</p>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE HERO -->
+<div class="svc-page-hero" aria-label="Cabecera de servicios">
+  <div class="hero-grid" aria-hidden="true"></div>
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Ruta de navegación">
+      <a href="index.html" data-i18n="nav_home">Inicio</a>
+      <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
+      <span data-i18n="nav_services">Servicios</span>
+    </nav>
+    <h1 data-i18n="svc_title">Nuestros <span class="accent">Servicios</span></h1>
+    <p data-i18n="svc_sub">Diseños únicos para cada ocasión, creados con pasión y calidad premium.</p>
+  </div>
+</div>
+
+<!-- ALL SERVICES -->
+<section class="section" id="all-services" aria-labelledby="svc-full-heading">
+  <div class="container">
+    <header class="section-header" data-aos="fade-up">
+      <span class="section-tag" data-i18n="svc_tag">Lo que Ofrecemos</span>
+      <h2 id="svc-full-heading" class="section-title" data-i18n="svc_title">Nuestros <span>Servicios</span></h2>
+      <div class="divider"><div class="dot"></div></div>
+    </header>
+
+    <div class="svc-full-grid">
+
+      <!-- Events -->
+      <article class="svc-card" data-aos="fade-up" id="eventos">
+        <div class="svc-img" aria-hidden="true">🎂</div>
+        <div class="svc-body">
+          <span class="svc-tag" data-i18n="svc1_tag">Eventos</span>
+          <h3 data-i18n="svc1_title">Decoración para Eventos</h3>
+          <p data-i18n="svc1_desc">Cumpleaños, bodas, grados, quince años, eventos corporativos y más. Transformamos cualquier espacio en una experiencia visual espectacular.</p>
+          <ul class="svc-features" role="list">
+            <li>Temáticas personalizadas</li>
+            <li>Arcos &amp; columnas incluidos</li>
+            <li>Mesa de dulces decorada</li>
+            <li>Instalación y desmontaje</li>
+          </ul>
+          <div class="mt-lg">
+            <a href="contact.html" class="btn btn-primary btn-sm">
+              <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+              <span data-i18n="cta_btn1">Reservar</span>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Gifts -->
+      <article class="svc-card" data-aos="fade-up" data-aos-delay="80" id="regalos">
+        <div class="svc-img" aria-hidden="true">🎁</div>
+        <div class="svc-body">
+          <span class="svc-tag" data-i18n="svc2_tag">Regalos</span>
+          <h3 data-i18n="svc2_title">Arreglos &amp; Regalos</h3>
+          <p data-i18n="svc2_desc">Bouquets con globos, cajas sorpresa, arreglos personalizados y detalles especiales para sorprender a quien más quieres.</p>
+          <ul class="svc-features" role="list">
+            <li>Bouquets desde 10 globos</li>
+            <li>Globos metálicos &amp; látex</li>
+            <li>Mensajes personalizados</li>
+            <li>Entrega a domicilio (Bogotá)</li>
+          </ul>
+          <div class="mt-lg">
+            <a href="contact.html" class="btn btn-primary btn-sm">
+              <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+              <span data-i18n="cta_btn1">Reservar</span>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Arches & Columns -->
+      <article class="svc-card" data-aos="fade-up" data-aos-delay="160" id="arcos">
+        <div class="svc-img" aria-hidden="true">🌈</div>
+        <div class="svc-body">
+          <span class="svc-tag" data-i18n="svc3_tag">Arquitectura</span>
+          <h3 data-i18n="svc3_title">Arcos &amp; Columnas</h3>
+          <p data-i18n="svc3_desc">Arcos orgánicos, columnas temáticas, guirnaldas y estructuras con globos para entradas, mesas y escenarios.</p>
+          <ul class="svc-features" role="list">
+            <li>Arcos orgánicos de 2–5 metros</li>
+            <li>Columnas con topper</li>
+            <li>Guirnaldas para mesas</li>
+            <li>Cualquier paleta de colores</li>
+          </ul>
+          <div class="mt-lg">
+            <a href="contact.html" class="btn btn-primary btn-sm">
+              <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+              <span data-i18n="cta_btn1">Reservar</span>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Custom Designs -->
+      <article class="svc-card" data-aos="fade-up" data-aos-delay="0" id="disenos">
+        <div class="svc-img" aria-hidden="true">💫</div>
+        <div class="svc-body">
+          <span class="svc-tag" data-i18n="svc4_tag">Diseño</span>
+          <h3 data-i18n="svc4_title">Diseños Independientes</h3>
+          <p data-i18n="svc4_desc">¿Tienes una idea en mente? La hacemos realidad. Esculturas, números, letras y figuras personalizadas con globos.</p>
+          <ul class="svc-features" role="list">
+            <li>Números &amp; letras gigantes</li>
+            <li>Esculturas con globos</li>
+            <li>Figuras animadas (Globoflexia)</li>
+            <li>Diseño exclusivo para tu evento</li>
+          </ul>
+          <div class="mt-lg">
+            <a href="contact.html" class="btn btn-primary btn-sm">
+              <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+              <span data-i18n="cta_btn1">Reservar</span>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Corporate -->
+      <article class="svc-card" data-aos="fade-up" data-aos-delay="80" id="corporativo">
+        <div class="svc-img" aria-hidden="true">🏢</div>
+        <div class="svc-body">
+          <span class="svc-tag" data-i18n="svc5_tag">Corporativo</span>
+          <h3 data-i18n="svc5_title">Eventos Corporativos</h3>
+          <p data-i18n="svc5_desc">Decoración profesional para lanzamientos de productos, inauguraciones, fiestas de empresa y activaciones de marca.</p>
+          <ul class="svc-features" role="list">
+            <li>Integración de identidad de marca</li>
+            <li>Instalaciones a gran escala</li>
+            <li>Servicio completo de A a Z</li>
+            <li>Disponibilidad 7 días</li>
+          </ul>
+          <div class="mt-lg">
+            <a href="contact.html" class="btn btn-primary btn-sm">
+              <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+              <span data-i18n="cta_btn1">Reservar</span>
+            </a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Premium Packages -->
+      <article class="svc-card" data-aos="fade-up" data-aos-delay="160" id="premium" style="border: 2px solid var(--gold-mid);">
+        <div class="svc-img" style="background: linear-gradient(135deg, var(--gold-pale), var(--purple-pale));" aria-hidden="true">👑</div>
+        <div class="svc-body">
+          <span class="svc-tag" style="background: var(--gold-pale); color: var(--gold-dark);" data-i18n="svc6_tag">Premium</span>
+          <h3 data-i18n="svc6_title">Paquetes Premium</h3>
+          <p data-i18n="svc6_desc">Todo incluido: diseño, instalación y desmontaje. Los mejores materiales para los eventos más especiales.</p>
+          <ul class="svc-features" role="list">
+            <li>Consultoría de diseño personalizada</li>
+            <li>Globos Sempertex (látex &amp; foil)</li>
+            <li>Instalación &amp; desmontaje incluido</li>
+            <li>Sesión de fotos básica</li>
+          </ul>
+          <div class="mt-lg">
+            <a href="contact.html" class="btn btn-gold btn-sm">
+              <i class="fa-solid fa-crown" aria-hidden="true"></i>
+              <span data-i18n="cta_btn1">Cotizar Premium</span>
+            </a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section section--alt" aria-labelledby="how-heading">
+  <div class="container">
+    <header class="section-header" data-aos="fade-up">
+      <span class="section-tag">Proceso</span>
+      <h2 id="how-heading" class="section-title">¿Cómo <span>Funciona</span>?</h2>
+      <div class="divider"><div class="dot"></div></div>
+      <p class="section-sub">Del contacto inicial a la decoración perfecta en 4 simples pasos.</p>
+    </header>
+    <div class="how-grid">
+      <div class="how-step" data-aos="fade-up">
+        <div class="how-num">1</div>
+        <h4>Contáctanos</h4>
+        <p>Comparte tu idea, fecha y presupuesto por WhatsApp, correo o nuestro formulario.</p>
+      </div>
+      <div class="how-step" data-aos="fade-up" data-aos-delay="100">
+        <div class="how-num">2</div>
+        <h4>Diseñamos Juntos</h4>
+        <p>Te presentamos propuestas de diseño y paleta de colores adaptadas a tu proyecto.</p>
+      </div>
+      <div class="how-step" data-aos="fade-up" data-aos-delay="200">
+        <div class="how-num">3</div>
+        <h4>Confirmamos</h4>
+        <p>Validamos fecha, ubicación (Bogotá o municipios cercanos) y detalles del pedido.</p>
+      </div>
+      <div class="how-step" data-aos="fade-up" data-aos-delay="300">
+        <div class="how-num">4</div>
+        <h4>¡A Decorar!</h4>
+        <p>Llegamos puntual, instalamos con amor y disfrutamos contigo el resultado final.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section cta-banner" aria-label="Llamada a la acción">
+  <div class="container cta-inner" data-aos="fade-up">
+    <h2 data-i18n="cta_title">¿Listo para crear algo increíble?</h2>
+    <p data-i18n="cta_sub">Contáctanos hoy y hagamos de tu próximo evento una experiencia mágica con globos.</p>
+    <div class="cta-btns">
+      <a href="contact.html" class="btn btn-gold">
+        <i class="fa-solid fa-calendar-check" aria-hidden="true"></i>
+        <span data-i18n="cta_btn1">Hacer una Reserva</span>
+      </a>
+      <a href="portfolio.html" class="btn btn-ghost">
+        <i class="fa-solid fa-images" aria-hidden="true"></i>
+        <span data-i18n="nav_portfolio">Ver Proyectos</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo"><img src="anexos/images/logo/LOGO.jpeg" alt="K&amp;A Balloons Studio" style="height:64px;width:auto"/></a>
+        <p class="mt-md" data-i18n="foot_desc">Empresa de diseño y decoración con globos en Bogotá, Colombia.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/angelita._.esco" target="_blank" rel="noopener" class="fsoc instagram" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="https://www.tiktok.com/@kaballoonsstudio" target="_blank" rel="noopener" class="fsoc tiktok" aria-label="TikTok"><i class="fa-brands fa-tiktok"></i></a>
+          <a href="https://wa.me/573006036940?text=%C2%A1Hola%20K%26A%20Balloons%20Studio!%20%F0%9F%8E%88%20Me%20encantar%C3%ADa%20saber%20m%C3%A1s%20sobre%20sus%20decoraciones%20con%20globos.%20%C2%BFMe%20pueden%20ayudar%3F" target="_blank" rel="noopener" class="fsoc whatsapp" aria-label="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="foot_links">Navegación</h4>
+        <ul class="footer-links"><li><a href="index.html" data-i18n="nav_home">Inicio</a></li><li><a href="services.html" data-i18n="nav_services">Servicios</a></li><li><a href="portfolio.html" data-i18n="nav_portfolio">Proyectos</a></li><li><a href="contact.html" data-i18n="nav_contact">Contacto</a></li></ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="foot_services">Servicios</h4>
+        <ul class="footer-links">
+          <li><a href="#eventos">Decoración para Eventos</a></li>
+          <li><a href="#regalos">Arreglos &amp; Regalos</a></li>
+          <li><a href="#arcos">Arcos &amp; Columnas</a></li>
+          <li><a href="#disenos">Diseños Independientes</a></li>
+          <li><a href="#premium">Paquetes Premium</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4 data-i18n="foot_contact">Contacto</h4>
+        <div class="footer-contact-row"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span>Bogotá, Colombia</span></div>
+        <div class="footer-contact-row"><i class="fa-solid fa-phone" aria-hidden="true"></i><span><a href="tel:+573006036940" style="color:inherit">+57 300 603 6940</a></span></div>
+        <div class="footer-contact-row"><i class="fa-solid fa-envelope" aria-hidden="true"></i><span><a href="mailto:kya.balloonsstudio@gmail.com" style="color:inherit">kya.balloonsstudio@gmail.com</a></span></div>
+        <div class="footer-contact-row"><i class="fa-solid fa-clock" aria-hidden="true"></i><span data-i18n="cinfo_hours_v">Lun–Sáb: 8am – 7pm</span></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p data-i18n="foot_rights">© 2025 K&amp;A Balloons Studio. Todos los derechos reservados.</p>
+      <div class="footer-bottom-links"><a href="privacidad.html" data-i18n="foot_privacy">Privacidad</a><a href="terms.html" data-i18n="foot_terms">Términos</a></div>
+    </div>
+  </div>
+</footer>
+
+<script src="js/translations.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
