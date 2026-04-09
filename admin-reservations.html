@@ -598,6 +598,14 @@ function escHtml(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
+/* ── Sincronizar #stat-eventos en la misma página (mismo tab) ── */
+function _syncEventosStat(value) {
+  const el = document.getElementById('stat-eventos');
+  if (!el) return;
+  el.dataset.counter = value;
+  el.textContent = '+' + value;
+}
+
 /* ── Actions ── */
 function updateStatus(id, status) {
   const r = reservations.find(x => x.id === id);
@@ -608,11 +616,15 @@ function updateStatus(id, status) {
   if (!wasCompleted && status === 'completada') {
     // Marked as completada → increment
     const cur = parseInt(localStorage.getItem('ka_eventos_counter') || '7');
-    localStorage.setItem('ka_eventos_counter', Math.max(7, cur) + 1);
+    const next = Math.max(7, cur) + 1;
+    localStorage.setItem('ka_eventos_counter', next);
+    _syncEventosStat(next);
   } else if (wasCompleted && status !== 'completada') {
     // Removed completada → decrement (never below base 7)
     const cur = parseInt(localStorage.getItem('ka_eventos_counter') || '7');
-    localStorage.setItem('ka_eventos_counter', Math.max(7, cur - 1));
+    const next = Math.max(7, cur - 1);
+    localStorage.setItem('ka_eventos_counter', next);
+    _syncEventosStat(next);
   }
   saveData();
   renderTable();
@@ -627,7 +639,9 @@ function deleteRes(id) {
   // Decrement counter if deleting a completed reservation
   if (r && r.status === 'completada') {
     const cur = parseInt(localStorage.getItem('ka_eventos_counter') || '7');
-    localStorage.setItem('ka_eventos_counter', Math.max(7, cur - 1));
+    const next = Math.max(7, cur - 1);
+    localStorage.setItem('ka_eventos_counter', next);
+    _syncEventosStat(next);
   }
   reservations = reservations.filter(x => x.id !== id);
   saveData();

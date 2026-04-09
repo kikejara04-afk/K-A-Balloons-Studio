@@ -69,18 +69,7 @@
     .stat-item .n { font-family: var(--font-head); font-size: 2.5rem; font-weight: 700; background: var(--grad-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; display: block; }
     .stat-item .l { font-size: .85rem; color: var(--gray-500); margin-top: .2rem; }
 
-    /* Testimonials */
-    .test-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--sp-xl); }
-    @media (max-width: 900px) { .test-grid { grid-template-columns: 1fr; } }
-    .test-card { background: var(--white); border-radius: var(--r-2xl); padding: var(--sp-2xl); box-shadow: var(--sh-md); border: 1px solid var(--gray-100); position: relative; transition: all var(--tr-base); }
-    .test-card:hover { transform: translateY(-4px); box-shadow: var(--sh-lg); }
-    .test-card::before { content: '"'; position: absolute; top: var(--sp-md); right: var(--sp-lg); font-family: var(--font-head); font-size: 5rem; color: var(--purple-light); line-height: 1; }
-    .test-stars { color: var(--gold-mid); font-size: .85rem; margin-bottom: var(--sp-md); }
-    .test-card p { font-size: .9rem; line-height: 1.7; margin-bottom: var(--sp-lg); font-style: italic; color: var(--gray-600); }
-    .test-author { display: flex; align-items: center; gap: var(--sp-md); }
-    .test-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--grad-primary); color: var(--white); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 1.1rem; flex-shrink: 0; }
-    .test-name { font-weight: 600; font-size: .9rem; color: var(--gray-800); }
-    .test-event { font-size: .75rem; color: var(--gray-400); }
+    /* Reseñas — estilos en styles.css (.reviews-grid, .review-card, etc.) */
   </style>
 </head>
 <body>
@@ -160,15 +149,15 @@
 <section class="section--alt" aria-label="Estadísticas">
   <div class="container stats-bar">
     <div class="stat-item" data-aos="fade-up">
-      <span class="n" data-counter="500" data-prefix="+">+500</span>
+      <span class="n" id="stat-eventos">+7</span>
       <span class="l" data-i18n="hero_stat1l">Eventos Realizados</span>
     </div>
     <div class="stat-item" data-aos="fade-up" data-aos-delay="100">
-      <span class="n" data-counter="200" data-prefix="+">+200</span>
+      <span class="n" id="stat-clientes">+200</span>
       <span class="l" data-i18n="hero_stat2l">Clientes Felices</span>
     </div>
     <div class="stat-item" data-aos="fade-up" data-aos-delay="200">
-      <span class="n">5★</span>
+      <span class="n" id="stat-calificacion">5★</span>
       <span class="l" data-i18n="hero_stat3l">Calificación</span>
     </div>
     <div class="stat-item" data-aos="fade-up" data-aos-delay="300">
@@ -480,6 +469,14 @@
         <div class="port-overlay"><h4>Rosa Blanca</h4><p>Flor artística en florero decorativo</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
       </div>
 
+      <!-- 36 — Escena de Pascua (tall) -->
+      <div class="port-item tall" data-category="diseno"
+           data-full="anexos/images/proyects/36.jpeg"
+           data-title="Escena de Pascua">
+        <img src="anexos/images/proyects/36.jpeg" alt="Escena de Pascua con conejos artísticos y árbol de globos verdes" loading="lazy"/>
+        <div class="port-overlay"><h4>Escena de Pascua</h4><p>Conejos artísticos, árbol y flores en globos</p><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -492,31 +489,36 @@
       <h2 id="test-heading" class="section-title">Lo que dicen <span>Nuestros Clientes</span></h2>
       <div class="divider"><div class="dot"></div></div>
     </header>
-    <div class="test-grid">
-      <div class="test-card" data-aos="fade-up">
-        <div class="test-stars">★★★★★</div>
-        <p>"K&amp;A superó todas mis expectativas. El arco de globos para mi boda fue absolutamente mágico. ¡Todos los invitados preguntaban quién lo hizo!"</p>
-        <div class="test-author">
-          <div class="test-avatar">V</div>
-          <div><div class="test-name">Valentina Ruiz</div><div class="test-event">Boda · Rosales, Bogotá</div></div>
+    <div class="reviews-grid" id="reviews-grid">
+
+      <!-- Reseñas de fallback: se muestran hasta que haya reseñas reales en ka_reviews -->
+      <article class="review-card" data-aos="fade-up">
+        <div class="rev-stars" aria-label="5 de 5 estrellas">★★★★★</div>
+        <p class="rev-text">&ldquo;K&amp;A superó todas mis expectativas. El arco de globos para mi boda fue absolutamente mágico. ¡Todos los invitados preguntaban quién lo hizo!&rdquo;</p>
+        <div class="rev-author">
+          <div class="rev-avatar" aria-hidden="true">V</div>
+          <div><strong class="rev-name">Valentina Ruiz</strong><span class="rev-date">Boda · Rosales, Bogotá</span></div>
         </div>
-      </div>
-      <div class="test-card" data-aos="fade-up" data-aos-delay="100">
-        <div class="test-stars">★★★★★</div>
-        <p>"Contratamos K&amp;A para el lanzamiento de nuestra marca y quedamos sorprendidos. Profesionales, puntuales y creativos. ¡100% recomendados!"</p>
-        <div class="test-author">
-          <div class="test-avatar">C</div>
-          <div><div class="test-name">Carlos Mendoza</div><div class="test-event">Evento Corporativo · Zona Rosa</div></div>
+      </article>
+
+      <article class="review-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="rev-stars" aria-label="5 de 5 estrellas">★★★★★</div>
+        <p class="rev-text">&ldquo;Contratamos K&amp;A para el lanzamiento de nuestra marca y quedamos sorprendidos. Profesionales, puntuales y creativos. ¡100% recomendados!&rdquo;</p>
+        <div class="rev-author">
+          <div class="rev-avatar" aria-hidden="true">C</div>
+          <div><strong class="rev-name">Carlos Mendoza</strong><span class="rev-date">Evento Corporativo · Zona Rosa</span></div>
         </div>
-      </div>
-      <div class="test-card" data-aos="fade-up" data-aos-delay="200">
-        <div class="test-stars">★★★★★</div>
-        <p>"La quinceañera de mi hija quedó de ensueño. Atención desde el diseño hasta el último detalle. ¡Gracias K&amp;A por hacer ese día tan especial!"</p>
-        <div class="test-author">
-          <div class="test-avatar">M</div>
-          <div><div class="test-name">Martha Gómez</div><div class="test-event">Quinceañera · Suba, Bogotá</div></div>
+      </article>
+
+      <article class="review-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="rev-stars" aria-label="5 de 5 estrellas">★★★★★</div>
+        <p class="rev-text">&ldquo;La quinceañera de mi hija quedó de ensueño. Atención desde el diseño hasta el último detalle. ¡Gracias K&amp;A por hacer ese día tan especial!&rdquo;</p>
+        <div class="rev-author">
+          <div class="rev-avatar" aria-hidden="true">M</div>
+          <div><strong class="rev-name">Martha Gómez</strong><span class="rev-date">Quinceañera · Suba, Bogotá</span></div>
         </div>
-      </div>
+      </article>
+
     </div>
   </div>
 </section>
@@ -575,6 +577,7 @@
 </footer>
 
 <script src="js/config.js"></script>
+<script src="js/stats.js"></script>
 <script src="js/translations.js"></script>
 <script src="js/main.js"></script>
 </body>

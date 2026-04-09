@@ -215,19 +215,19 @@
 
     <div class="hero-stats" aria-label="Estadísticas">
       <div class="hstat">
-        <span class="n" id="stat-eventos" data-counter="7" data-prefix="+" aria-label="7 eventos realizados">7</span>
+        <span class="n" id="stat-eventos" aria-label="eventos realizados">7</span>
         <span class="l" data-i18n="hero_stat1l">Eventos Realizados</span>
       </div>
       <div class="hstat">
-        <span class="n" data-counter="200" data-prefix="+" aria-label="Más de 200 clientes">200</span>
+        <span class="n" id="stat-clientes" aria-label="clientes felices">+200</span>
         <span class="l" data-i18n="hero_stat2l">Clientes Felices</span>
       </div>
       <div class="hstat">
-        <span class="n" aria-label="Calificación 5 estrellas">5★</span>
+        <span class="n" id="stat-calificacion" aria-label="Calificación 5 estrellas">5★</span>
         <span class="l" data-i18n="hero_stat3l">Calificación</span>
       </div>
       <div class="hstat">
-        <span class="n" data-counter="4" data-prefix="+" aria-label="Más de 4 años">4</span>
+        <span class="n" data-counter="2" data-prefix="+" aria-label="Más de 2 años de experiencia">2</span>
         <span class="l" data-i18n="hero_stat4l">Años de Experiencia</span>
       </div>
     </div>
@@ -401,7 +401,7 @@
         <div class="svc-body">
           <span class="svc-tag" data-i18n="svc2_tag">Regalos</span>
           <h3 data-i18n="svc2_title">Arreglos &amp; Regalos</h3>
-          <p data-i18n="svc2_desc">Bouquets de globos, cajas sorpresa, arreglos personalizados y detalles especiales para sorprender a quien más quieres.</p>
+          <p data-i18n="svc2_desc">Bouquets de globos, arreglos personalizados y detalles especiales para sorprender a quien más quieres.</p>
           <a href="services.html" class="svc-link" data-i18n="svc_more">Ver Más →</a>
         </div>
       </article>
@@ -414,7 +414,7 @@
         <div class="svc-body">
           <span class="svc-tag" data-i18n="svc3_tag">Arquitectura</span>
           <h3 data-i18n="svc3_title">Arcos &amp; Columnas</h3>
-          <p data-i18n="svc3_desc">Arcos orgánicos, columnas temáticas, guirnaldas y estructuras de globos para entradas, mesas y escenarios.</p>
+          <p data-i18n="svc3_desc">Arcos orgánicos, columnas temáticas, bases y centros de mesas para entradas, mesas y escenarios.</p>
           <a href="services.html" class="svc-link" data-i18n="svc_more">Ver Más →</a>
         </div>
       </article>
@@ -481,6 +481,56 @@
         <i class="fa-solid fa-images" aria-hidden="true"></i>
         <span data-i18n="port_see_all">Ver Galería Completa</span>
       </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     REVIEWS / TESTIMONIALS
+     ============================================================ -->
+<section class="section" id="reviews" aria-labelledby="rev-heading">
+  <div class="container">
+    <header class="section-header" data-aos="fade-up">
+      <span class="section-tag">Opiniones</span>
+      <h2 id="rev-heading" class="section-title">Lo que dicen <span>Nuestros Clientes</span></h2>
+      <div class="divider"><div class="dot"></div></div>
+      <p class="section-sub">Reseñas reales de clientes que confiaron en nosotros para sus celebraciones.</p>
+    </header>
+
+    <!-- Top 3 reseñas — renderizadas por stats.js -->
+    <div id="reviews-grid" class="reviews-grid">
+      <p class="reviews-empty" id="reviews-empty">Sé el primero en dejar tu reseña más abajo.</p>
+    </div>
+
+    <!-- Formulario para nueva reseña -->
+    <div class="review-form-wrap" id="review-form-wrap" data-aos="fade-up">
+      <h3><i class="fa-solid fa-star" aria-hidden="true"></i> Deja tu Reseña</h3>
+      <form id="form-review" novalidate>
+        <div class="form-group">
+          <label class="form-label" for="rev-name">Tu Nombre</label>
+          <input class="form-input" type="text" id="rev-name" placeholder="Nombre completo" maxlength="80" required/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Calificación</label>
+          <div class="star-picker" id="star-picker" role="group" aria-label="Calificación de 1 a 5 estrellas">
+            <button type="button" class="star-btn" data-val="1" aria-label="1 estrella">★</button>
+            <button type="button" class="star-btn" data-val="2" aria-label="2 estrellas">★</button>
+            <button type="button" class="star-btn" data-val="3" aria-label="3 estrellas">★</button>
+            <button type="button" class="star-btn" data-val="4" aria-label="4 estrellas">★</button>
+            <button type="button" class="star-btn" data-val="5" aria-label="5 estrellas">★</button>
+          </div>
+          <input type="hidden" id="rev-rating" value="0"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="rev-text">Tu Reseña</label>
+          <textarea class="form-textarea" id="rev-text" rows="3" maxlength="500"
+                    placeholder="Cuéntanos cómo fue tu experiencia..." required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">
+          <i class="fa-solid fa-paper-plane" aria-hidden="true"></i>
+          <span>Enviar Reseña</span>
+        </button>
+      </form>
     </div>
   </div>
 </section>
@@ -593,16 +643,8 @@
      SCRIPTS
      ============================================================ -->
 <script src="js/config.js"></script>
+<script src="js/stats.js"></script>
 <script src="js/translations.js"></script>
-<script>
-// Set eventos counter from localStorage before main.js initializes counters
-(function() {
-  var c = parseInt(localStorage.getItem('ka_eventos_counter') || '7');
-  if (c < 7) c = 7; // minimum base value
-  var el = document.getElementById('stat-eventos');
-  if (el) { el.setAttribute('data-counter', c); el.textContent = c; }
-})();
-</script>
 <script src="js/main.js"></script>
 </body>
 </html>
