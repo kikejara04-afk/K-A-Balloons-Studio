@@ -43,12 +43,11 @@ const SITE_CONFIG = {
 // ──────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', function () {
 
-  var waURL = 'https://wa.me/' + SITE_CONFIG.phone +
-              '?text=' + encodeURIComponent(SITE_CONFIG.whatsappMessage);
+  var waURL = 'https://wa.link/oh3e35';
 
   // ── WhatsApp: mostrar u ocultar según whatsappActive ─────────────
   var waEls = document.querySelectorAll(
-    '.ms-btn.whatsapp, .fsoc.whatsapp, a.social-big-btn[aria-label*="WhatsApp"], a[href*="wa.me/"]'
+    '.ms-btn.whatsapp, .fsoc.whatsapp, a.social-big-btn[aria-label*="WhatsApp"], a[href*="wa.me/"], a[href*="wa.link/"]'
   );
   if (SITE_CONFIG.whatsappActive) {
     waEls.forEach(function (a) {
