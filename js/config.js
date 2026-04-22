@@ -25,8 +25,8 @@ const SITE_CONFIG = {
   whatsappActive:  true,
 
   // ── Instagram ────────────────────────────────────────────────────
-  instagram:       'https://www.instagram.com/angelita._.esco',
-  instagramHandle: '@angelita._.esco',
+  instagram:       'https://www.instagram.com/k.a_ballons_studio?igsh=bnR5Y3BkaDM0c296',
+  instagramHandle: '@k.a_ballons_studio',
   /** true → botones de Instagram visibles · false → ocultos         */
   instagramActive: true,
 

@@ -196,7 +196,7 @@
     <div class="menu-head">
       <div class="menu-deco-balloons" aria-hidden="true"><div class="deco-balloon"></div><div class="deco-balloon"></div><div class="deco-balloon"></div><div class="deco-balloon"></div></div>
       <button id="menu-close" class="menu-close" aria-label="Cerrar menú"><i class="fa-solid fa-xmark"></i></button>
-      <div class="menu-brand"><h3>K&amp;A Balloons Studio</h3><p data-i18n="nav_tagline">Diseño con Globos</p></div>
+      <div class="menu-brand"><h3>K&amp;A Balloons Studio</h3><p data-i18n="nav_tagline">Decoración con Globos</p></div>
     </div>
     <nav class="menu-nav">
       <ul class="menu-nav-list">
@@ -369,13 +369,13 @@
             <div class="form-group">
               <label class="form-label" for="res-input-service" data-i18n="res_service">Tipo de Servicio</label>
               <select class="form-select" id="res-input-service" name="res-service" required aria-required="true">
-                <option value="" disabled selected>-- Selecciona un servicio --</option>
-                <option value="event-decoration">Decoración para Eventos</option>
-                <option value="gift-arrangement">Arreglos &amp; Regalos</option>
-                <option value="arch-column">Arcos &amp; Columnas</option>
-                <option value="custom-design">Diseños Personalizados</option>
-                <option value="corporate">Evento Corporativo</option>
-                <option value="premium">Paquete Premium</option>
+                <option value="" disabled selected data-i18n="res_select">-- Selecciona un servicio --</option>
+                <option value="event-decoration" data-i18n="res_opt_event">Decoración para Eventos</option>
+                <option value="gift-arrangement" data-i18n="res_opt_gift">Arreglos &amp; Regalos</option>
+                <option value="arch-column" data-i18n="res_opt_arch">Arcos &amp; Columnas</option>
+                <option value="custom-design" data-i18n="res_opt_custom">Diseños Personalizados</option>
+                <option value="corporate" data-i18n="res_opt_corp">Evento Corporativo</option>
+                <option value="premium" data-i18n="res_opt_prem">Paquete Premium</option>
               </select>
               <span class="form-error" id="res-service-error" role="alert"></span>
             </div>
@@ -400,7 +400,7 @@
                      list="location-datalist"
                      placeholder="Ej: Chapinero, Bogotá · Chía · Facatativá"
                      required aria-required="true" aria-autocomplete="list"/>
-              <span class="form-hint">Solo Bogotá D.C. y municipios de la Sabana.</span>
+              <span class="form-hint" data-i18n="res_loc_hint">Solo Bogotá D.C. y municipios de la Sabana.</span>
               <span class="form-error" id="res-location-error" role="alert"></span>
             </div>
 
@@ -434,11 +434,11 @@
             <div class="res-payment-badge" role="note">
               <i class="fa-solid fa-wallet" aria-hidden="true"></i>
               <div>
-                <strong>Métodos de pago aceptados</strong>
+                <strong data-i18n="pay_title">Métodos de pago aceptados</strong>
                 <div class="res-payment-pills">
-                  <span class="res-payment-pill"><i class="fa-solid fa-building-columns"></i> Transferencia</span>
-                  <span class="res-payment-pill"><i class="fa-solid fa-mobile-screen"></i> Nequi</span>
-                  <span class="res-payment-pill"><i class="fa-solid fa-money-bill-wave"></i> Efectivo</span>
+                  <span class="res-payment-pill"><i class="fa-solid fa-building-columns"></i> <span data-i18n="pay_transfer">Transferencia</span></span>
+                  <span class="res-payment-pill"><i class="fa-solid fa-mobile-screen"></i> <span data-i18n="pay_nequi">Nequi</span></span>
+                  <span class="res-payment-pill"><i class="fa-solid fa-money-bill-wave"></i> <span data-i18n="pay_cash">Efectivo</span></span>
                 </div>
               </div>
             </div>
@@ -459,10 +459,10 @@
 <section class="section social-section" aria-labelledby="social-heading">
   <div class="container">
     <header class="section-header" data-aos="fade-up">
-      <span class="section-tag">Redes Sociales</span>
-      <h2 id="social-heading" class="section-title">Encuéntranos en <span>Redes</span></h2>
+      <span class="section-tag" data-i18n="social_tag">Redes Sociales</span>
+      <h2 id="social-heading" class="section-title" data-i18n="social_title">Encuéntranos en <span>Redes</span></h2>
       <div class="divider"><div class="dot"></div></div>
-      <p class="section-sub">Síguenos para ver los proyectos más recientes, inspiración y novedades.</p>
+      <p class="section-sub" data-i18n="social_sub">Síguenos para ver los proyectos más recientes, inspiración y novedades.</p>
     </header>
     <div class="social-section-grid">
       <a href="https://www.instagram.com/k.a_ballons_studio?igsh=bnR5Y3BkaDM0c296" target="_blank" rel="noopener noreferrer"

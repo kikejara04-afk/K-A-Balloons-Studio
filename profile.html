@@ -203,7 +203,7 @@
         <div class="deco-balloon"></div><div class="deco-balloon"></div>
       </div>
       <button id="menu-close" class="menu-close" aria-label="Cerrar menú"><i class="fa-solid fa-xmark"></i></button>
-      <div class="menu-brand"><h3>K&amp;A Balloons Studio</h3><p data-i18n="nav_tagline">Diseño con Globos</p></div>
+      <div class="menu-brand"><h3>K&amp;A Balloons Studio</h3><p data-i18n="nav_tagline">Decoración con Globos</p></div>
     </div>
     <nav class="menu-nav">
       <ul class="menu-nav-list">
@@ -232,12 +232,12 @@
   <div class="hero-grid" aria-hidden="true"></div>
   <div class="container">
     <nav class="breadcrumb" aria-label="Ruta de navegación">
-      <a href="index.html">Inicio</a>
+      <a href="index.html" data-i18n="nav_home">Inicio</a>
       <i class="fa-solid fa-chevron-right" aria-hidden="true"></i>
-      <span>Mi Perfil</span>
+      <span data-i18n="prof_breadcrumb">Mi Perfil</span>
     </nav>
-    <h1>Mi <span class="accent">Perfil</span></h1>
-    <p>Administra tu información y revisa tus reservas.</p>
+    <h1 data-i18n="prof_title">Mi <span class="accent">Perfil</span></h1>
+    <p data-i18n="prof_subtitle">Administra tu información y revisa tus reservas.</p>
   </div>
 </div>
 
@@ -255,7 +255,7 @@
         <span class="prof-role-badge" id="prof-role-badge"><i class="fa-solid fa-user"></i> Usuario</span>
         <div class="prof-card-actions" id="prof-card-actions">
           <button class="btn-prof-action btn-logout-prof" id="prof-logout-btn">
-            <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+            <i class="fa-solid fa-right-from-bracket"></i> <span data-i18n="prof_logout">Cerrar Sesión</span>
           </button>
         </div>
       </div>
@@ -268,42 +268,42 @@
     <!-- Edit info -->
     <div class="prof-section">
       <div class="prof-sec-head">
-        <h2><i class="fa-solid fa-pen-to-square"></i> Información Personal</h2>
+        <h2><i class="fa-solid fa-pen-to-square"></i> <span data-i18n="prof_personal_info">Información Personal</span></h2>
       </div>
       <div class="prof-sec-body">
         <div class="prof-field-group">
-          <label class="prof-field-label" for="pf-name">Nombre para mostrar</label>
+          <label class="prof-field-label" for="pf-name" data-i18n="prof_field_name">Nombre para mostrar</label>
           <input class="prof-field-input" type="text" id="pf-name" maxlength="60" placeholder="Tu nombre"/>
         </div>
         <div class="prof-field-group">
-          <label class="prof-field-label" for="pf-email">Correo electrónico</label>
+          <label class="prof-field-label" for="pf-email" data-i18n="prof_field_email">Correo electrónico</label>
           <input class="prof-field-input" type="email" id="pf-email" readonly/>
         </div>
         <div class="prof-field-group">
-          <label class="prof-field-label" for="pf-tipo">Tipo de cuenta</label>
+          <label class="prof-field-label" for="pf-tipo" data-i18n="prof_field_type">Tipo de cuenta</label>
           <input class="prof-field-input" type="text" id="pf-tipo" readonly/>
         </div>
         <button class="btn-save-prof" id="pf-save-btn">
-          <i class="fa-solid fa-floppy-disk"></i> Guardar cambios
+          <i class="fa-solid fa-floppy-disk"></i> <span data-i18n="prof_save">Guardar cambios</span>
         </button>
-        <span class="save-feedback" id="pf-save-ok">✓ Guardado correctamente</span>
+        <span class="save-feedback" id="pf-save-ok" data-i18n="prof_saved">✓ Guardado correctamente</span>
       </div>
     </div>
 
     <!-- Reservations history -->
     <div class="prof-section">
       <div class="prof-sec-head">
-        <h2><i class="fa-solid fa-calendar-check"></i> Mis Reservas</h2>
+        <h2><i class="fa-solid fa-calendar-check"></i> <span data-i18n="prof_my_res">Mis Reservas</span></h2>
         <a href="contact.html" class="btn btn-primary" style="padding:.4rem 1rem;font-size:.82rem;">
-          <i class="fa-solid fa-plus"></i> Nueva reserva
+          <i class="fa-solid fa-plus"></i> <span data-i18n="prof_new_res">Nueva reserva</span>
         </a>
       </div>
       <div class="prof-sec-body" style="padding-top: var(--sp-md)">
         <ul class="res-list" id="prof-res-list"></ul>
         <div class="res-empty" id="prof-res-empty" style="display:none">
           <i class="fa-solid fa-calendar-xmark"></i>
-          <p>Aún no tienes reservas registradas.<br>
-          <a href="contact.html" style="color:var(--blue-mid)">Haz tu primera reserva</a> →</p>
+          <p><span data-i18n="prof_no_res">Aún no tienes reservas registradas.</span><br>
+          <a href="contact.html" style="color:var(--blue-mid)" data-i18n="prof_no_res_link">Haz tu primera reserva</a> →</p>
         </div>
       </div>
     </div>
@@ -314,9 +314,9 @@
 <!-- Redirect to login message (shown if not authenticated) -->
 <div id="prof-noauth" style="display:none; text-align:center; padding: var(--sp-4xl) var(--sp-xl);">
   <i class="fa-solid fa-lock" style="font-size:3rem;color:var(--gray-300);display:block;margin-bottom:var(--sp-lg)"></i>
-  <h2 style="font-family:var(--font-head)">Inicia sesión para ver tu perfil</h2>
-  <p style="color:var(--text-muted);margin-bottom:var(--sp-2xl)">Necesitas una cuenta para acceder a esta sección.</p>
-  <a href="login.html" class="btn btn-primary"><i class="fa-solid fa-right-to-bracket"></i> Iniciar Sesión</a>
+  <h2 style="font-family:var(--font-head)" data-i18n="prof_noauth_title">Inicia sesión para ver tu perfil</h2>
+  <p style="color:var(--text-muted);margin-bottom:var(--sp-2xl)" data-i18n="prof_noauth_desc">Necesitas una cuenta para acceder a esta sección.</p>
+  <a href="login.html" class="btn btn-primary"><i class="fa-solid fa-right-to-bracket"></i> <span data-i18n="prof_noauth_btn">Iniciar Sesión</span></a>
 </div>
 
 <!-- FOOTER -->
@@ -377,17 +377,20 @@
    PROFILE PAGE LOGIC
    ============================================================ */
 const SERVICE_NAMES = {
-  'event-decoration': 'Decoración para Eventos',
-  'gift-arrangement':  'Arreglos & Regalos',
-  'arch-column':       'Arcos & Columnas',
-  'custom-design':     'Diseños Personalizados',
-  'corporate':         'Evento Corporativo',
-  'premium':           'Paquete Premium',
-  'cumpleaños':        'Cumpleaños',
-  'boda':              'Boda',
-  'corporativo':       'Corporativo',
-  'otro':              'Otro',
+  'event-decoration': () => t('svc_name_event'),
+  'gift-arrangement':  () => t('svc_name_gift'),
+  'arch-column':       () => t('svc_name_arch'),
+  'custom-design':     () => t('svc_name_custom'),
+  'corporate':         () => t('svc_name_corp'),
+  'premium':           () => t('svc_name_premium'),
+  'cumpleaños':        () => t('svc_name_birthday'),
+  'boda':              () => t('svc_name_wedding'),
+  'corporativo':       () => t('svc_name_corporate'),
+  'otro':              () => t('svc_name_other'),
 };
+function getServiceName(val) {
+  return SERVICE_NAMES[val] ? SERVICE_NAMES[val]() : val;
+}
 
 function escHtml(s) {
   return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
@@ -424,10 +427,10 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('prof-display-email').textContent  = user.email || '—';
   const roleBadge = document.getElementById('prof-role-badge');
   if (isAdmin) {
-    roleBadge.innerHTML = '<i class="fa-solid fa-shield-halved"></i> Administrador';
+    roleBadge.innerHTML = `<i class="fa-solid fa-shield-halved"></i> ${t('prof_role_admin')}`;
     roleBadge.classList.add('badge-admin');
   } else {
-    roleBadge.innerHTML = '<i class="fa-solid fa-user"></i> Usuario';
+    roleBadge.innerHTML = `<i class="fa-solid fa-user"></i> ${t('prof_role_user')}`;
     roleBadge.classList.add('badge-user');
   }
 
@@ -437,7 +440,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const adminBtn = document.createElement('a');
     adminBtn.href = 'admin-reservations.html';
     adminBtn.className = 'btn-prof-action btn-admin-panel';
-    adminBtn.innerHTML = '<i class="fa-solid fa-shield-halved"></i> Panel de Administración';
+    adminBtn.innerHTML = `<i class="fa-solid fa-shield-halved"></i> ${t('prof_admin_panel')}`;
     actions.insertBefore(adminBtn, actions.firstChild);
   }
 
@@ -451,7 +454,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // --- Fill edit form ---
   document.getElementById('pf-name').value  = user.name;
   document.getElementById('pf-email').value = user.email || '';
-  document.getElementById('pf-tipo').value  = isAdmin ? 'Administrador' : (user.demo ? 'Usuario (demo)' : 'Usuario registrado');
+  document.getElementById('pf-tipo').value = isAdmin ? t('prof_type_admin') : (user.demo ? t('prof_type_demo') : t('prof_type_user'));
 
   // Save name changes
   document.getElementById('pf-save-btn')?.addEventListener('click', () => {
@@ -486,10 +489,10 @@ document.addEventListener('DOMContentLoaded', () => {
     empty.style.display = 'block';
   } else {
     const STATUS_MAP = {
-      pendiente:  ['rs-pendiente',  '⏰ Pendiente'],
-      confirmada: ['rs-confirmada', '✓ Confirmada'],
-      completada: ['rs-completada', '✓ Completada'],
-      cancelada:  ['rs-cancelada',  '✕ Cancelada'],
+      pendiente:  ['rs-pendiente',  t('res_status_pending')],
+      confirmada: ['rs-confirmada', t('res_status_confirmed')],
+      completada: ['rs-completada', t('res_status_completed')],
+      cancelada:  ['rs-cancelada',  t('res_status_cancelled')],
     };
     list.innerHTML = reservations
       .sort((a,b) => new Date(b.createdAt||0) - new Date(a.createdAt||0))
@@ -498,7 +501,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const day  = d ? d.getDate() : '—';
         const mon  = d ? d.toLocaleDateString('es-CO', {month:'short'}) : '';
         const [cls, lbl] = STATUS_MAP[r.status] || STATUS_MAP.pendiente;
-        const svc  = SERVICE_NAMES[r.service] || r.service || 'Servicio';
+        const svc  = getServiceName(r.service) || r.service || t('svc_tag') || 'Servicio';
         return `
           <li class="res-list-item">
             <div class="res-date-badge">

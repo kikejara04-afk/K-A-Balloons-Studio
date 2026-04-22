@@ -5,20 +5,47 @@
 
 /*
   ⚠️  CONFIGURACIÓN REQUERIDA / SETUP REQUIRED:
-  1. Crea un proyecto en https://console.firebase.google.com
-  2. Activa Authentication → Email/Password y Google
-  3. Reemplaza el objeto firebaseConfig con tus credenciales
-  4. Agrega tu dominio en Authentication → Authorized domains
+
+  PASO 1 — Crear proyecto Firebase
+    → Ve a https://console.firebase.google.com y crea un proyecto.
+
+  PASO 2 — Obtener credenciales
+    → Menú ⚙️ → "Configuración del proyecto" → pestaña "General"
+    → Sección "Tus apps" → haz clic en el icono Web (</>)
+    → Registra la app (cualquier nombre) y copia el objeto firebaseConfig.
+
+  PASO 3 — Activar proveedores de autenticación
+    → Authentication → "Comenzar" → Sign-in method:
+       ✓ Correo electrónico/contraseña → Activar
+       ✓ Google → Activar (pon un correo de soporte del proyecto)
+
+  PASO 4 — Agregar dominio autorizado
+    → Authentication → Settings → Dominios autorizados
+    → Agrega tu dominio de producción (ej: kaballoonsstudio.com)
+    → Para pruebas locales, "localhost" ya está incluido por defecto.
+
+  PASO 5 — Reemplaza los valores de abajo con tu configuración real.
 */
 
 const firebaseConfig = {
-  apiKey:            "TU_API_KEY",
-  authDomain:        "tu-proyecto.firebaseapp.com",
-  projectId:         "tu-proyecto",
-  storageBucket:     "tu-proyecto.appspot.com",
-  messagingSenderId: "123456789",
-  appId:             "1:123456789:web:abcdef123456"
+  apiKey:            "AIzaSyCWGuviGHx3sTfpW93-UL2B0aHn2k8IXe0",
+  authDomain:        "k-a-balloons-studio.firebaseapp.com",
+  projectId:         "k-a-balloons-studio",
+  storageBucket:     "k-a-balloons-studio.firebasestorage.app",
+  messagingSenderId: "881100625834",
+  appId:             "1:881100625834:web:58f11ed2e9f1eb19cb3dd3",
+  measurementId:     "G-8WMM49J5SM"
 };
+
+/* Detecta si el config es el de ejemplo o tiene valores reales */
+function isFirebaseConfigured() {
+  return (
+    typeof firebaseConfig.apiKey === 'string' &&
+    firebaseConfig.apiKey.length > 10 &&
+    firebaseConfig.apiKey !== 'TU_API_KEY' &&
+    firebaseConfig.projectId !== 'tu-proyecto'
+  );
+}
 
 /* ============================================================
    FIREBASE INIT
@@ -28,6 +55,10 @@ let googleProvider = null;
 let firebaseReady = false;
 
 function initFirebase() {
+  if (!isFirebaseConfigured()) {
+    console.warn('[K&A Auth] Firebase no configurado — modo local activo. Sigue los pasos en auth.js para activar Google Sign-In.');
+    return;
+  }
   try {
     if (typeof firebase !== 'undefined' && !firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
@@ -35,12 +66,14 @@ function initFirebase() {
       googleProvider = new firebase.auth.GoogleAuthProvider();
       googleProvider.addScope('profile');
       googleProvider.addScope('email');
+      googleProvider.setCustomParameters({ prompt: 'select_account' });
       firebaseReady = true;
-      console.log('[K&A Auth] Firebase initialized');
+      console.log('[K&A Auth] Firebase inicializado correctamente.');
       watchAuthState();
+      handleRedirectResult();
     }
   } catch (err) {
-    console.warn('[K&A Auth] Firebase not available — running in demo mode.', err.message);
+    console.warn('[K&A Auth] Error al inicializar Firebase:', err.message);
   }
 }
 
@@ -69,6 +102,28 @@ function watchAuthState() {
       sessionStorage.removeItem('ka_user');
     }
   });
+}
+
+/* ============================================================
+   GOOGLE REDIRECT RESULT
+   Gestiona el resultado cuando signInWithRedirect fue invocado
+   (fallback cuando el navegador bloquea el popup).
+   ============================================================ */
+async function handleRedirectResult() {
+  if (!auth) return;
+  try {
+    const result = await auth.getRedirectResult();
+    if (result && result.user) {
+      const displayName = result.user.displayName || result.user.email.split('@')[0];
+      window.KA?.showToast('success', `¡Bienvenido, ${displayName}!`, '', 2500);
+      setTimeout(() => (window.location.href = 'index.html'), 800);
+    }
+  } catch (err) {
+    if (err.code && err.code !== 'auth/no-current-user') {
+      console.error('[K&A Auth] Error en redirect result:', err.code);
+      window.KA?.showToast('error', 'Error con Google', mapAuthError(err.code));
+    }
+  }
 }
 
 /* ============================================================
@@ -108,15 +163,29 @@ async function register(name, email, password) {
 
 /* ============================================================
    GOOGLE SIGN IN
+   Intenta popup primero; si el navegador lo bloquea, usa redirect.
    ============================================================ */
 async function signInWithGoogle() {
   if (!firebaseReady) {
-    return demoSignIn('google@example.com', 'google');
+    return {
+      success: false,
+      code:    'auth/not-configured',
+      message: mapAuthError('auth/not-configured'),
+    };
   }
   try {
     await auth.signInWithPopup(googleProvider);
     return { success: true };
   } catch (err) {
+    // Popup bloqueado por el navegador → fallback a redirect
+    if (err.code === 'auth/popup-blocked') {
+      try {
+        await auth.signInWithRedirect(googleProvider);
+        return { success: true }; // la página se recargará; handleRedirectResult() toma el control
+      } catch (redirectErr) {
+        return { success: false, code: redirectErr.code, message: mapAuthError(redirectErr.code) };
+      }
+    }
     return { success: false, code: err.code, message: mapAuthError(err.code) };
   }
 }
@@ -170,7 +239,11 @@ function mapAuthError(code) {
       'auth/too-many-requests':         'Demasiados intentos. Intenta más tarde.',
       'auth/network-request-failed':    'Error de red. Verifica tu conexión.',
       'auth/popup-closed-by-user':      'Ventana cerrada. Intenta de nuevo.',
-      'auth/popup-blocked':             'Ventana emergente bloqueada. Permite ventanas emergentes.',
+      'auth/popup-blocked':             'Ventana emergente bloqueada. Redirigiendo con método alternativo…',
+      'auth/cancelled-popup-request':   'Solo puede haber una ventana de Google abierta a la vez.',
+      'auth/account-exists-with-different-credential': 'Ya existe una cuenta con este correo usando otro método de inicio de sesión.',
+      'auth/not-configured':            'Google Sign-In no está habilitado. El administrador debe configurar Firebase.',
+      'auth/invalid-credential':        'Credencial inválida o expirada. Intenta de nuevo.',
       'default':                        'Ocurrió un error. Intenta de nuevo.',
     },
     en: {
@@ -184,7 +257,11 @@ function mapAuthError(code) {
       'auth/too-many-requests':         'Too many attempts. Try again later.',
       'auth/network-request-failed':    'Network error. Check your connection.',
       'auth/popup-closed-by-user':      'Window closed. Try again.',
-      'auth/popup-blocked':             'Popup blocked. Allow popups.',
+      'auth/popup-blocked':             'Popup blocked. Redirecting with alternative method…',
+      'auth/cancelled-popup-request':   'Only one Google sign-in window can be open at a time.',
+      'auth/account-exists-with-different-credential': 'An account with this email already exists using a different sign-in method.',
+      'auth/not-configured':            'Google Sign-In is not enabled. The administrator must configure Firebase.',
+      'auth/invalid-credential':        'Invalid or expired credential. Try again.',
       'default':                        'An error occurred. Try again.',
     }
   };
